@@ -8,8 +8,6 @@
 
 Ymodem::Ymodem(Modem *parent)
 {
-    Stage = msFirst;
-    sn = 0;
     isrun = false;
     ui = parent;
 }
@@ -184,7 +182,9 @@ void Ymodem::run()
 
     msgq_push(mcREQ);
 
+    Stage = msFirst;
     isrun = true;
+
     while (isrun)
     {
         int msg = 0;

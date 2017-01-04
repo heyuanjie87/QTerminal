@@ -42,6 +42,7 @@ void Modem::showTransfer(int total, int remain, float speed)
 
 void Modem::startTransfer(char type)
 {
+    showTransfer(1, 1, 0);
     show();
     ym->start();
 }
