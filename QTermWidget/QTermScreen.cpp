@@ -92,6 +92,7 @@ void QTermScreen::CursorHome(int row, int column)
     {
         tc.movePosition(QTextCursor::Right);
     }
+
     setTextCursor( tc );
 }
 
@@ -162,23 +163,35 @@ void QTermScreen::EraseStartOfLine()
 void QTermScreen::EraseEntireLine()
 {
     QTextCursor tc = textCursor();
-    tc.select(QTextCursor::BlockUnderCursor);
+    tc.select(QTextCursor::LineUnderCursor);
     tc.removeSelectedText();
 }
 
 void QTermScreen::EraseDown()
 {
-    QTextCursor tc = textCursor();
+    int bntop, bnbot;
 
-    tc.movePosition(QTextCursor::End, QTextCursor::KeepAnchor);
-    tc.removeSelectedText();
+    QTextCursor tctop = cursorForPosition(QPoint(0, 0));
+    QTextCursor tcbot = cursorForPosition(QPoint(0, rect().bottom()));
+
+    bntop = tctop.blockNumber();
+    bnbot = tcbot.blockNumber();
+
+    EraseEndOfLine();
+    CursorDown(bnbot - bntop);
+    for (; bntop < bnbot; bntop ++)
+    {
+        EraseEndOfLine();
+        CursorUp();
+    } 
 }
 
 void QTermScreen::EraseUp()
 {
     QTextCursor tc = textCursor();
+    QTextCursor tcup = cursorForPosition(QPoint(0, 0));
 
-    tc.movePosition(QTextCursor::Start, QTextCursor::KeepAnchor);
+    tc.setPosition(tcup.position(), QTextCursor::KeepAnchor);
     tc.removeSelectedText();
 }
 

@@ -55,6 +55,8 @@ private slots:
 
     void on_test2_clicked();
 
+    void on_test3_clicked();
+
 private:
     Ui::Dialog *ui;
 };
