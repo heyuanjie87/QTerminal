@@ -2,6 +2,7 @@
 #define MODEM_H
 
 #include <QDialog>
+#include <QCloseEvent>
 
 namespace Ui {
 class Modem;
@@ -32,6 +33,9 @@ private Q_SLOTS:
 Q_SIGNALS:
     void outData(const QByteArray &data);
     void exitTransfer();
+
+private:
+    void closeEvent(QCloseEvent *event);
 
 private:
     Ui::Modem *ui;

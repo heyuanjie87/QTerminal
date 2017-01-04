@@ -3,6 +3,8 @@
 
 #include "Ymodem.h"
 
+#include <QMessageBox>
+
 Modem::Modem(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Modem)
@@ -61,3 +63,23 @@ void Modem::closed()
 {
     emit exitTransfer();
 }
+
+void Modem::closeEvent(QCloseEvent *event)
+{
+    QMessageBox::StandardButton button;
+
+    button = QMessageBox::question(this, tr("退出程序"),
+        QString(tr("警告:任务正在运行中，是否结束操作退出?")),
+        QMessageBox::Yes | QMessageBox::No);
+
+    if (button == QMessageBox::No)
+    {
+        event->ignore();  //忽略退出信号，程序继续运行
+    }
+    else if (button == QMessageBox::Yes)
+    {
+        event->accept();  //接受退出信号，程序退出
+        ym->close();
+    }
+}
+
