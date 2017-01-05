@@ -26,12 +26,12 @@ private:
     void eraseText(char ch);
     void moveCursor(char ch);
     void setDisplay();
+    void flushText();
 
 private:
     int m_Mode;
     QString m_Param;
-    bool m_sel;
-    int lastkey;
+    QByteArray m_Text;
 };
 
 #endif // QTERMWIDGET_H

@@ -16,6 +16,7 @@ void QTermWidget::putData(const QByteArray &data)
     {
         recvChar(data[i]);
     }
+    flushText();
 }
 
 void QTermWidget::recvChar(char ch)
@@ -89,17 +90,21 @@ void QTermWidget::recvChar(char ch)
         {
             m_Mode = 1;
             m_Param.clear();
+            flushText();
         }break;
         case 0x0D:
         {
+            flushText();
             CursorStartOfLine();
         }break;
         case 0x0A:
         {
+            flushText();
             CursorNewLine();
         }break;
         case 0x08:
         {
+            flushText();
             CursorLeft();
         }break;
         case 0x07:
@@ -108,10 +113,7 @@ void QTermWidget::recvChar(char ch)
         }break;
         default:
         {
-            QByteArray t;
-            t[0]=ch;
-            SelectRight();
-            insertPlainText(t);
+            m_Text.push_back(ch);
         }break;
         }
     }break;
@@ -128,9 +130,7 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
 {
     QByteArray byte;
 
-    lastkey = e->key();
-
-    switch (lastkey)
+    switch (e->key())
     {
     case Qt::Key_Backspace:
         byte[0] = 0x08;
@@ -265,6 +265,16 @@ void QTermWidget::setDisplay()
             }
         }break;
         }
+    }
+}
+
+void QTermWidget::flushText()
+{
+    if (m_Text.size())
+    {
+        SelectRight(m_Text.size());
+        insertPlainText(m_Text);
+        m_Text.clear();
     }
 }
 
