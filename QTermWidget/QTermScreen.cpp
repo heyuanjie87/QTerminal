@@ -40,8 +40,17 @@ void QTermScreen::CursorNewLine()
 void QTermScreen::SelectRight(int n)
 {
     QTextCursor tc = textCursor();
+    int endpos, pos;
+    QTextCursor tcend = textCursor();
 
-    if (!tc.atBlockEnd())
+    tcend.movePosition(QTextCursor::EndOfBlock);
+    endpos = tcend.position();
+    pos = tc.position();
+    if (pos + n >= endpos)
+    {
+        n = endpos - pos - 1;
+    }
+    if (n > 0)
     {
         tc.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, n);
         setTextCursor(tc);

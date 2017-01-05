@@ -210,3 +210,10 @@ void Dialog::on_test3_clicked()
 
     emit outData(data);
 }
+
+void Dialog::on_cn_clicked()
+{
+    QByteArray data = "cn中文\n";
+
+    emit outData(data);
+}
