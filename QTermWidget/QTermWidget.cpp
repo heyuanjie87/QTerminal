@@ -1,5 +1,7 @@
 #include "QTermWidget.h"
 
+#include <QApplication>
+
 QTermWidget::QTermWidget(QWidget *parent):
     QTermScreen(parent)
 {
@@ -109,7 +111,7 @@ void QTermWidget::recvChar(char ch)
         }break;
         case 0x07:
         {
-
+            QApplication::beep();
         }break;
         default:
         {
