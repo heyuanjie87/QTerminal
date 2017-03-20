@@ -20,19 +20,24 @@ void QTermScreen::CursorStartOfLine()
     setTextCursor(tc);
 }
 
-void QTermScreen::CursorNewLine()
+void QTermScreen::CursorNewLine(int n)
 {
     QTextCursor tc = textCursor();
 
-    tc.movePosition(QTextCursor::EndOfBlock);
-    if (tc.atEnd())
+    do
     {
-        tc.insertBlock();
-    }
-    else
-    {
-        tc.movePosition(QTextCursor::NextBlock);
-    }
+        tc.movePosition(QTextCursor::EndOfBlock);
+        if (tc.atEnd())
+        {
+            tc.insertBlock();
+        }
+        else
+        {
+            tc.movePosition(QTextCursor::NextBlock);
+        }
+
+        n --;
+    }while (n > 0);
 
     setTextCursor(tc);
 }
@@ -91,13 +96,27 @@ void QTermScreen::CursorRight(int n)
 
 void QTermScreen::CursorPosition(int row, int column)
 {
+    QTextCursor tc;
+    int lines;
+
     moveCursor(QTextCursor::End);
-    QTextCursor tc = cursorForPosition(QPoint(0, 0));
+    tc = cursorForPosition(QPoint(0, 0));
+    lines = tc.document()->blockCount();
 
     for (int i = 1; i < row; i ++)
     {
-        tc.movePosition(QTextCursor::Down);
+        if (lines == 0)
+        {
+            tc.movePosition(QTextCursor::EndOfBlock);
+            tc.insertBlock();
+        }
+        else
+        {
+            tc.movePosition(QTextCursor::NextBlock);
+            lines --;
+        }
     }
+
     for (int i = 1; i < column; i ++)
     {
         tc.movePosition(QTextCursor::Right);

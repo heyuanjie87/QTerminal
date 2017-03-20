@@ -12,7 +12,7 @@ public:
 
 public:
     void CursorStartOfLine();
-    void CursorNewLine();
+    void CursorNewLine(int n = 1);
     void CursorUp(int n = 1);
     void CursorDown(int n = 1);
     void CursorLeft(int n = 1);

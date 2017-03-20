@@ -65,6 +65,10 @@ void QTermWidget::recvChar(char ch)
         {
             m_Param.push_back(ch);
         }break;
+        case '?':
+        {
+            m_Mode = 3;
+        }break;
         default:
         {
             m_Mode = 0;
@@ -80,6 +84,19 @@ void QTermWidget::recvChar(char ch)
             m_Mode = 2;
         }break;
         default:
+        {
+            m_Mode = 0;
+        }break;
+        }
+    }break;
+    case 3:
+    {
+        switch (ch)
+        {
+        case '0':
+        case '1':
+        {}break;
+        case 'h':
         {
             m_Mode = 0;
         }break;
@@ -307,14 +324,14 @@ void QTermWidget::moveCursor(char cmd)
     }
 }
 
-void QTermWidget::debug(QByteArray &data)
+void QTermWidget::debug(const QByteArray &data)
 {
     QString str;
 
     for (int i = 0; i < data.size(); i ++)
     {
         QString tmp;
-        str += tmp.sprintf("%02X ", (unsigned char)(data.data()[i]));
+        str += tmp.sprintf("0x%02X, ", (unsigned char)(data.data()[i]));
     }
 
     qDebug(str.toStdString().data());

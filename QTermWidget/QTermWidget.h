@@ -24,7 +24,7 @@ private:
     void recvChar(char ch);
     void parseParam(QVector<int> &param, int np = 1, int defval = 0);
     void flushText();
-    void debug(QByteArray &data);
+    void debug(const QByteArray &data);
 
 private:
     void eraseText(char cmd);
