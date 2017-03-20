@@ -29,4 +29,5 @@ MainWindow::~MainWindow()
 void MainWindow::on_bttest_clicked()
 {
     test->show();
+    test->activateWindow();
 }

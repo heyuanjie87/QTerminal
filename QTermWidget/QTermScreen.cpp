@@ -10,6 +10,7 @@ QTermScreen::QTermScreen(QWidget *parent):
     p.setColor(QPalette::Text, Qt::white);
     setPalette(p);
     setLineWrapMode(NoWrap);
+    screenRows = 24;
 }
 
 void QTermScreen::CursorStartOfLine()

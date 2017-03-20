@@ -217,3 +217,10 @@ void Dialog::on_cn_clicked()
 
     emit outData(data);
 }
+
+void Dialog::on_add_clicked()
+{
+    QByteArray data = "\ncnaaddddddddd";
+
+    emit outData(data);
+}

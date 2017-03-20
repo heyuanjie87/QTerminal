@@ -59,6 +59,8 @@ private slots:
 
     void on_cn_clicked();
 
+    void on_add_clicked();
+
 private:
     Ui::Dialog *ui;
 };
