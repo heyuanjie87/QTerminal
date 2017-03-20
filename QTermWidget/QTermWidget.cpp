@@ -18,6 +18,7 @@ void QTermWidget::putData(const QByteArray &data)
     {
         recvChar(data[i]);
     }
+
     flushText();
 }
 
@@ -194,12 +195,12 @@ void QTermWidget::parseParam(QVector <int> &param, int np, int defval)
     }
 }
 
-void QTermWidget::eraseText(char ch)
+void QTermWidget::eraseText(char cmd)
 {
     QVector <int> p;
 
     parseParam(p);
-    if (ch == 'J')
+    if (cmd == 'J')
     {
         switch (p[0])
         {
@@ -280,13 +281,13 @@ void QTermWidget::flushText()
     }
 }
 
-void QTermWidget::moveCursor(char ch)
+void QTermWidget::moveCursor(char cmd)
 {
     QVector <int> p;
 
     parseParam(p, 2, 1);
 
-    switch (ch)
+    switch (cmd)
     {
     case 'A':
         CursorUp(p[0]);
@@ -304,4 +305,17 @@ void QTermWidget::moveCursor(char ch)
         CursorPosition(p[0], p[1]);
         break;
     }
+}
+
+void QTermWidget::debug(QByteArray &data)
+{
+    QString str;
+
+    for (int i = 0; i < data.size(); i ++)
+    {
+        QString tmp;
+        str += tmp.sprintf("%02X ", (unsigned char)(data.data()[i]));
+    }
+
+    qDebug(str.toStdString().data());
 }

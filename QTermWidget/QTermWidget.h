@@ -23,10 +23,13 @@ protected:
 private:
     void recvChar(char ch);
     void parseParam(QVector<int> &param, int np = 1, int defval = 0);
-    void eraseText(char ch);
-    void moveCursor(char ch);
-    void setDisplay();
     void flushText();
+    void debug(QByteArray &data);
+
+private:
+    void eraseText(char cmd);
+    void moveCursor(char cmd);
+    void setDisplay();
 
 private:
     int m_Mode;

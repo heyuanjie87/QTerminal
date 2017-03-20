@@ -46,9 +46,9 @@ void QTermScreen::SelectRight(int n)
     tcend.movePosition(QTextCursor::EndOfBlock);
     endpos = tcend.position();
     pos = tc.position();
-    if (pos + n >= endpos)
+    if (pos + n > endpos)
     {
-        n = endpos - pos - 1;
+        n = endpos - pos;
     }
     if (n > 0)
     {
