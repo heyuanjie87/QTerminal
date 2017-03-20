@@ -10,7 +10,6 @@ QTermScreen::QTermScreen(QWidget *parent):
     p.setColor(QPalette::Text, Qt::white);
     setPalette(p);
     setLineWrapMode(NoWrap);
-    screenRows = 24;
 }
 
 void QTermScreen::CursorStartOfLine()
@@ -92,6 +91,7 @@ void QTermScreen::CursorRight(int n)
 
 void QTermScreen::CursorPosition(int row, int column)
 {
+    moveCursor(QTextCursor::End);
     QTextCursor tc = cursorForPosition(QPoint(0, 0));
 
     for (int i = 1; i < row; i ++)

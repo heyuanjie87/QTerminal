@@ -36,9 +36,6 @@ public:
 
 public:
     void SelectRight(int n = 1);
-
-private:
-    int screenRows;
 };
 
 #endif // QTERMSCREEN_H
