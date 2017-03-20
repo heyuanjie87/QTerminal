@@ -301,7 +301,7 @@ void QTermWidget::moveCursor(char ch)
         CursorRight(p[0]);
         break;
     case 'H':
-        CursorHome(p[0], p[1]);
+        CursorPosition(p[0], p[1]);
         break;
     }
 }

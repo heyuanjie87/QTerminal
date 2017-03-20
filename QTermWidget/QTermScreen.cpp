@@ -89,20 +89,20 @@ void QTermScreen::CursorRight(int n)
     setTextCursor(tc);
 }
 
-void QTermScreen::CursorHome(int row, int column)
+void QTermScreen::CursorPosition(int row, int column)
 {
     QTextCursor tc = cursorForPosition(QPoint(0, 0));
 
-    for (int i = 0; i < row - 1; i ++)
+    for (int i = 1; i < row; i ++)
     {
         tc.movePosition(QTextCursor::Down);
     }
-    for (int i = 0; i < column - 1; i ++)
+    for (int i = 1; i < column; i ++)
     {
         tc.movePosition(QTextCursor::Right);
     }
 
-    setTextCursor( tc );
+    setTextCursor(tc);
 }
 
 void QTermScreen::DisplayForeground(QColor &color)

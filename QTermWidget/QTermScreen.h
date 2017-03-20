@@ -17,7 +17,7 @@ public:
     void CursorDown(int n = 1);
     void CursorLeft(int n = 1);
     void CursorRight(int n = 1);
-    void CursorHome(int row = 0, int column = 0);
+    void CursorPosition(int row = 1, int column = 1);
 
 public:
     QColor GetColor(int c);
