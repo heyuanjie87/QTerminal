@@ -8,7 +8,7 @@ class QTermWidget : public QTermScreen
     Q_OBJECT
 
 public:
-    QTermWidget(QWidget *parent = Q_NULLPTR);
+    explicit QTermWidget(QWidget *parent = Q_NULLPTR);
 
 public slots:
     void putData(const QByteArray &data);
