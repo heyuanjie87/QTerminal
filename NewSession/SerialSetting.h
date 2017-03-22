@@ -15,7 +15,14 @@ public:
     explicit SerialSetting(QWidget *parent = 0);
     ~SerialSetting();
 
+    void updateDevice();
     void getSetting(SessionSetting &ns);
+
+private slots:
+    void on_devname_activated(int index);
+
+private:
+    void initParam();
 
 private:
     Ui::SerialSetting *ui;

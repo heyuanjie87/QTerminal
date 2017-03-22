@@ -24,6 +24,10 @@ public:
     void setSettings(SessionSetting &ss);
 
 private slots:
+    void writeData(const QByteArray &data);
+    void readData();
+
+private slots:
     void on_btRecord_clicked();
 
     void on_btConnect_clicked();
@@ -31,6 +35,7 @@ private slots:
 private:
     void initSendSave();
     void initSerial();
+    void initTerm();
     bool openSerial();
 
 private:
