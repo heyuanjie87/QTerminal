@@ -1,33 +1,44 @@
 #ifndef SERIALTERM_H
 #define SERIALTERM_H
 
-#include "NewSession/SessionWindow.h"
-#include "QTermWidget/QTermWidget.h"
+#include <QMainWindow>
 
+namespace Ui {
+class SerialTerm;
+}
+
+class QTermWidget;
+class SendSave;
 class QSerialPort;
 
-class SerialTerm : public SessionWindow
+#include "NewSession/Setting.h"
+
+class SerialTerm : public QMainWindow
 {
     Q_OBJECT
 
 public:
     explicit SerialTerm(QWidget *parent = 0);
+    ~SerialTerm();
 
-    QWidget* getWindow();
-    void setSetting(const SessionSetting &ss);
-    void open();
-    void close();
-
-signals:
+    void setSettings(SessionSetting &ss);
 
 private slots:
-    void readData();
-    void writeData(const QByteArray &data);
+    void on_btRecord_clicked();
+
+    void on_btConnect_clicked();
 
 private:
+    void initSendSave();
+    void initSerial();
+    bool openSerial();
+
+private:
+    Ui::SerialTerm *ui;
     QTermWidget *term;
-    SessionSetting settings;
+    SendSave *dlgSS;
     QSerialPort *serial;
+    SessionSetting settings;
 };
 
 #endif // SERIALTERM_H

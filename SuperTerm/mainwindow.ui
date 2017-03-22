@@ -20,7 +20,7 @@
      <x>0</x>
      <y>0</y>
      <width>915</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -31,7 +31,6 @@
    </widget>
    <addaction name="menuFile"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget">
    <property name="features">
     <set>QDockWidget::NoDockWidgetFeatures</set>
@@ -79,6 +78,11 @@
      <attribute name="headerVisible">
       <bool>false</bool>
      </attribute>
+     <column>
+      <property name="text">
+       <string notr="true">1</string>
+      </property>
+     </column>
     </widget>
    </widget>
   </widget>

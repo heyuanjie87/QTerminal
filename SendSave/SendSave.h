@@ -20,7 +20,7 @@ public:
     ~SendSave();
 
     void tableAddRow(QString &name, QString &type, QString &value, QString &endline);
-    QToolButton* toolButton(int index = 0);
+    QWidget* toolButton(int index = 0);
 
 signals:
     void outData(const QByteArray &data);

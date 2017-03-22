@@ -117,9 +117,9 @@ void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
         item->setData(0, Qt::UserRole, var);
 
         SerialTerm *term = new SerialTerm;
+        term->setSettings(set);
 
-
-        dock->setWidget(term->getWindow());
+        dock->setWidget(term);
 
         addDockWidget(Qt::RightDockWidgetArea, dock);
         return;

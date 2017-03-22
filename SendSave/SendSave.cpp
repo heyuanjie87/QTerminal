@@ -193,9 +193,9 @@ void SendSave::on_send_clicked()
     VHeaderClicked(sel);
 }
 
-QToolButton* SendSave::toolButton(int index)
+QWidget* SendSave::toolButton(int index)
 {
-    QToolButton* bt = NULL;
+    QWidget* bt = NULL;
 
     switch (index)
     {
