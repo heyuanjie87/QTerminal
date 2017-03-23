@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport
+QT       += core gui serialport network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,7 +15,8 @@ FORMS += \
     SuperTerm/mainwindow.ui \
     NewSession/NewSession.ui \
     NewSession/SerialSetting.ui \
-    NewSession/TelnetSetting.ui
+    NewSession/TelnetSetting.ui \
+    Telnet/TelnetTerm.ui
 
 HEADERS += \
     SuperTerm/mainwindow.h \
@@ -26,7 +27,9 @@ HEADERS += \
     Serial/SerialTerm.h \
     QTermWidget/QTermScreen.h \
     QTermWidget/QTermWidget.h \
-    NewSession/SessionWindow.h
+    NewSession/SessionWindow.h \
+    Telnet/qttelnet.h \
+    Telnet/TelnetTerm.h
 
 SOURCES += \
     SuperTerm/main.cpp \
@@ -38,5 +41,7 @@ SOURCES += \
     Serial/SerialTerm.cpp \
     QTermWidget/QTermScreen.cpp \
     QTermWidget/QTermWidget.cpp \
-    NewSession/SessionWindow.cpp
+    NewSession/SessionWindow.cpp \
+    Telnet/qttelnet.cpp \
+    Telnet/TelnetTerm.cpp
 
