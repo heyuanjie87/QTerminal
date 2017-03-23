@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport network
+QT       += core gui serialport sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,7 +16,9 @@ FORMS += \
     NewSession/NewSession.ui \
     NewSession/SerialSetting.ui \
     NewSession/TelnetSetting.ui \
-    Telnet/TelnetTerm.ui
+    Telnet/TelnetTerm.ui \
+    Serial/SerialTerm.ui \
+    SendSave/SendSave.ui
 
 HEADERS += \
     SuperTerm/mainwindow.h \
@@ -24,12 +26,14 @@ HEADERS += \
     NewSession/SerialSetting.h \
     NewSession/Setting.h \
     NewSession/TelnetSetting.h \
-    Serial/SerialTerm.h \
     QTermWidget/QTermScreen.h \
     QTermWidget/QTermWidget.h \
     NewSession/SessionWindow.h \
     Telnet/qttelnet.h \
-    Telnet/TelnetTerm.h
+    Telnet/TelnetTerm.h \
+    Serial/SerialTerm.h \
+    SendSave/SendSave.h \
+    SendSave/SSWorker.h
 
 SOURCES += \
     SuperTerm/main.cpp \
@@ -38,10 +42,11 @@ SOURCES += \
     NewSession/SerialSetting.cpp \
     NewSession/Setting.cpp \
     NewSession/TelnetSetting.cpp \
-    Serial/SerialTerm.cpp \
     QTermWidget/QTermScreen.cpp \
     QTermWidget/QTermWidget.cpp \
     NewSession/SessionWindow.cpp \
     Telnet/qttelnet.cpp \
-    Telnet/TelnetTerm.cpp
-
+    Telnet/TelnetTerm.cpp \
+    Serial/SerialTerm.cpp \
+    SendSave/SendSave.cpp \
+    SendSave/SSWorker.cpp
