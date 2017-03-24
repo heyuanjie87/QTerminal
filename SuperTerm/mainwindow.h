@@ -30,6 +30,8 @@ private slots:
 
     void on_new_s_triggered();
 
+    void on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int column);
+
 private:
     void menuInit(void);
 

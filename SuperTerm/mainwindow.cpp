@@ -105,13 +105,12 @@ void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
 {
     QDockWidget *dock;
     QVariant var;
+    bool add = false;
 
     dock= new QDockWidget(set["name"], this);
     dock->setAllowedAreas(Qt::RightDockWidgetArea);
 
     var.setValue(dock);
-
-    dwlist.append(dock);
 
     if (set["type"] == "串口终端")
     {
@@ -121,9 +120,7 @@ void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
         term->setSettings(set);
 
         dock->setWidget(term);
-
-        addDockWidget(Qt::RightDockWidgetArea, dock);
-        return;
+        add = true;
     }
 
     if (set["type"] == "telnet")
@@ -134,11 +131,28 @@ void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
         //term->setSettings(set);
 
         dock->setWidget(term);
-
-        addDockWidget(Qt::RightDockWidgetArea, dock);
-        return;
+        add = true;
     }
 
-    dwlist.removeLast();
-    delete dock;
+    if (add)
+    {
+        dwlist.append(dock);
+        addDockWidget(Qt::RightDockWidgetArea, dock);
+    }
+    else
+    {
+        delete dock;
+    }
+}
+
+void MainWindow::on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+    QDockWidget *dock;
+    QVariant var;
+
+    var = item->data(column, Qt::UserRole);
+    dock = var.value<QDockWidget*>();
+
+    dock->show();
+    dock->activateWindow();
 }
