@@ -1206,10 +1206,6 @@ void QtTelnet::sendData(const QString &data)
 
     QByteArray str = data.toLocal8Bit();
     d->socket->write(str);
-    //d->socket->write("\r\n\0", 3);// Original
-    d->socket->write("\r\n", 2);// Saul's Solution
-
-    //d->socket->write("ls\r\n", 4);//Solution!!!!!!!!!
 }
 
 /*!
