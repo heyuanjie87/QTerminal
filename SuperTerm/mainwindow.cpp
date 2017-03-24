@@ -99,6 +99,7 @@ QTreeWidgetItem* MainWindow::addSessionProject(SessionSetting &set)
 }
 
 #include "Serial/SerialTerm.h"
+#include "Telnet/TelnetTerm.h"
 
 void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
 {
@@ -118,6 +119,19 @@ void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
 
         SerialTerm *term = new SerialTerm;
         term->setSettings(set);
+
+        dock->setWidget(term);
+
+        addDockWidget(Qt::RightDockWidgetArea, dock);
+        return;
+    }
+
+    if (set["type"] == "telnet")
+    {
+        item->setData(0, Qt::UserRole, var);
+
+        TelnetTerm *term = new TelnetTerm;
+        //term->setSettings(set);
 
         dock->setWidget(term);
 

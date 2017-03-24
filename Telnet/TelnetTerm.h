@@ -21,10 +21,15 @@ public:
     ~TelnetTerm();
 
 private slots:
-    void readData(QString &data);
+    void readData(const QString &data);
+    void writeData(const QByteArray &data);
 
 private slots:
     void on_btConnect_clicked();
+
+private:
+    void initTelnet();
+    void initTerm();
 
 private:
     Ui::TelnetTerm *ui;

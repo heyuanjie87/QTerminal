@@ -9,12 +9,41 @@ TelnetTerm::TelnetTerm(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    telnet = new QtTelnet;
+    initTelnet();
+    initTerm();
+
+    statusBar()->addWidget(ui->btConnect);
 }
 
 TelnetTerm::~TelnetTerm()
 {
     delete ui;
+}
+
+void TelnetTerm::initTerm()
+{
+    term = new QTermWidget;
+
+    connect(term, SIGNAL(outData(QByteArray)), this, SLOT(writeData(QByteArray)));
+
+    setCentralWidget(term);
+}
+
+void TelnetTerm::initTelnet()
+{
+    telnet = new QtTelnet;
+
+    connect(telnet, SIGNAL(message(QString)), this, SLOT(readData(QString)));
+}
+
+void TelnetTerm::writeData(const QByteArray &data)
+{
+    telnet->sendData(data);
+}
+
+void TelnetTerm::readData(const QString &data)
+{
+    term->putData(data.toLocal8Bit());
 }
 
 void TelnetTerm::on_btConnect_clicked()
