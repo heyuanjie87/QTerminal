@@ -39,7 +39,7 @@
     <string>端口:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="host">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -48,8 +48,11 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="text">
+    <string>localhost</string>
+   </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="port">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -57,6 +60,9 @@
      <width>131</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="text">
+    <string>23</string>
    </property>
   </widget>
  </widget>

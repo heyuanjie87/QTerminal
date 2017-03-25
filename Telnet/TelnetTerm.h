@@ -20,6 +20,8 @@ public:
     explicit TelnetTerm(QWidget *parent = 0);
     ~TelnetTerm();
 
+    void setSettings(SessionSetting &ss);
+
 private slots:
     void readData(const QString &data);
     void writeData(const QByteArray &data);

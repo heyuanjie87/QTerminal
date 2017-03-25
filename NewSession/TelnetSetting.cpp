@@ -15,5 +15,6 @@ TelnetSetting::~TelnetSetting()
 
 void TelnetSetting::getSetting(SessionSetting &ns)
 {
-
+    ns["host"] = ui->host->text();
+    ns["port"] = ui->port->text();
 }

@@ -20,6 +20,11 @@ TelnetTerm::~TelnetTerm()
     delete ui;
 }
 
+void TelnetTerm::setSettings(SessionSetting &ss)
+{
+    settings = ss;
+}
+
 void TelnetTerm::initTerm()
 {
     term = new QTermWidget;
@@ -48,5 +53,8 @@ void TelnetTerm::readData(const QString &data)
 
 void TelnetTerm::on_btConnect_clicked()
 {
-    telnet->connectToHost("localhost");
+    QString host = settings["host"];
+    short port = settings["port"].toShort();
+
+    telnet->connectToHost(host, port);
 }

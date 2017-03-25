@@ -128,7 +128,7 @@ void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
         item->setData(0, Qt::UserRole, var);
 
         TelnetTerm *term = new TelnetTerm;
-        //term->setSettings(set);
+        term->setSettings(set);
 
         dock->setWidget(term);
         add = true;
