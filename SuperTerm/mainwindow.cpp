@@ -88,6 +88,9 @@ QTreeWidgetItem* MainWindow::addSessionProject(SessionSetting &set)
     type->setText(0, set["type"]);
     if (addtype)
     {
+        QVariant var(0);
+
+        type->setData(0, Qt::UserRole, var);
         ui->twProject->addTopLevelItem(type);
     }
 
@@ -151,8 +154,31 @@ void MainWindow::on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int colum
     QVariant var;
 
     var = item->data(column, Qt::UserRole);
+    if (var == 0)
+        return;
+
     dock = var.value<QDockWidget*>();
 
     dock->show();
     dock->activateWindow();
+}
+
+void MainWindow::on_twProject_customContextMenuRequested(const QPoint &pos)
+{
+    QTreeWidgetItem* curItem;
+
+    curItem = ui->twProject->itemAt(pos);
+    if (curItem == NULL)
+        return;
+
+    QVariant var = curItem->data(0, Qt::UserRole);
+    if (var == 0)
+        return;
+
+    QMenu *popMenu =new QMenu(this);
+
+    popMenu->addAction(ui->del_s);//往菜单内添加QAction   该action在前面用设计器定义了
+    popMenu->exec(QCursor::pos());
+
+    delete popMenu;
 }

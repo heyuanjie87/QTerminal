@@ -32,6 +32,8 @@ private slots:
 
     void on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int column);
 
+    void on_twProject_customContextMenuRequested(const QPoint &pos);
+
 private:
     void menuInit(void);
 

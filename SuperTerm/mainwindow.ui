@@ -28,6 +28,7 @@
      <string>文件</string>
     </property>
     <addaction name="new_s"/>
+    <addaction name="del_s"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
@@ -75,6 +76,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <attribute name="headerVisible">
       <bool>false</bool>
      </attribute>
@@ -89,6 +93,11 @@
   <action name="new_s">
    <property name="text">
     <string>新建</string>
+   </property>
+  </action>
+  <action name="del_s">
+   <property name="text">
+    <string>删除会话</string>
    </property>
   </action>
  </widget>
