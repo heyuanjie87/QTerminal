@@ -160,7 +160,7 @@ void MainWindow::on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int colum
     dock = var.value<QDockWidget*>();
 
     dock->show();
-    dock->activateWindow();
+    dock->raise();
 }
 
 void MainWindow::on_twProject_customContextMenuRequested(const QPoint &pos)
