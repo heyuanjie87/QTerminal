@@ -59,6 +59,11 @@ bool SerialTerm::openSerial()
     serial->setPortName(settings["dev"]);
     serial->setBaudRate(settings["speed"].toInt());
 
+    serial->setParity(QSerialPort::NoParity);
+    serial->setStopBits(QSerialPort::OneStop);
+    serial->setDataBits(QSerialPort::Data8);
+    serial->setFlowControl(QSerialPort::NoFlowControl);
+
     ret = serial->open(QIODevice::ReadWrite);
 
     return ret;
