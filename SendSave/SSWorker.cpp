@@ -13,6 +13,8 @@ using namespace std;
 SSWorker::SSWorker(SendSave *parent)
 {
     ui = parent;
+    dbSS = NULL;
+    query = NULL;
 }
 
 SSWorker::~SSWorker()
@@ -23,10 +25,6 @@ SSWorker::~SSWorker()
 
 bool SSWorker::dbInit()
 {
-    dbSS = new QSqlDatabase;
-
-    *dbSS = QSqlDatabase::addDatabase("QSQLITE");
-    dbSS->setDatabaseName("save.dblite");
     if (dbSS->open())
     {
        query = new QSqlQuery(*dbSS);
@@ -34,6 +32,18 @@ bool SSWorker::dbInit()
     }
 
     return false;
+}
+
+void SSWorker::connectDb(QString name)
+{
+   if (dbSS == NULL)
+   {
+       dbSS = new QSqlDatabase;
+       *dbSS = QSqlDatabase::addDatabase("QSQLITE");
+       dbSS->setDatabaseName(name);
+
+       start();
+   }
 }
 
 void SSWorker::dbNewTable()
@@ -55,6 +65,9 @@ void SSWorker::dbAddRow(QString &sn, QString &name, QString &type, QString &valu
     QString str;
     ostringstream tmp;
 
+    if (!query)
+        return;
+
     tmp << "INSERT INTO sendlist VALUES("
         << "'" << sn.toStdString() << "',"
         << "'" << name.toStdString() << "',"
@@ -73,6 +86,9 @@ void SSWorker::dbUpdateRow(QString &sn, int col, QString &val)
     string head = "UPDATE sendlist SET ";
     QString str;
     ostringstream temp;
+
+    if (!query)
+        return;
 
     temp << head;
 
@@ -105,6 +121,9 @@ void SSWorker::dbDelAll()
     QString str;
     ostringstream temp;
 
+    if (!query)
+        return;
+
     temp << head;
     str = str.fromStdString(temp.str());
     query->exec(str);
@@ -132,7 +151,9 @@ void SSWorker::dbQuery()
 
 void SSWorker::run()
 {
-    dbInit();
-    dbNewTable();
-    dbQuery();
+    if (dbInit())
+    {
+        dbNewTable();
+        dbQuery();
+    }
 }

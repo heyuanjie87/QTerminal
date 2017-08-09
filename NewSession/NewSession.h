@@ -19,14 +19,13 @@ public:
     explicit NewSession(QWidget *parent = 0);
     ~NewSession();
 
-    void getSetting(SessionSetting &s);
+    void getSetting(Session &s);
 
 private slots:
     void on_sesType_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 private:
     Ui::NewSession *ui;
-    SessionSetting nss;
     QMap <QString, Setting*> wSetting;
 };
 

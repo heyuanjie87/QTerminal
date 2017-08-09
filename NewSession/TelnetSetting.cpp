@@ -13,7 +13,7 @@ TelnetSetting::~TelnetSetting()
     delete ui;
 }
 
-void TelnetSetting::getSetting(SessionSetting &ns)
+void TelnetSetting::getSetting(SesParam &ns)
 {
     ns["host"] = ui->host->text();
     ns["port"] = ui->port->text();

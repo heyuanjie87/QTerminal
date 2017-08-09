@@ -16,7 +16,7 @@ public:
     ~SerialSetting();
 
     void updateDevice();
-    void getSetting(SessionSetting &ns);
+    void getSetting(SesParam &ns);
 
 private slots:
     void on_devname_activated(int index);

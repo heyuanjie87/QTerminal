@@ -69,9 +69,12 @@ bool SerialTerm::openSerial()
     return ret;
 }
 
-void SerialTerm::setSettings(SessionSetting &ss)
+void SerialTerm::setSettings(SesParam &ss, QString id)
 {
     settings = ss;
+
+    id += ".dblite";
+    dlgSS->connectDb(id);
 }
 
 void SerialTerm::writeData(const QByteArray &data)

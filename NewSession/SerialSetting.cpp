@@ -59,7 +59,7 @@ void SerialSetting::updateDevice()
     }
 }
 
-void SerialSetting::getSetting(SessionSetting &ns)
+void SerialSetting::getSetting(SesParam &ns)
 {
     ns["dev"] = ui->devname->currentText();
     ns["speed"] = ui->speed->currentText();

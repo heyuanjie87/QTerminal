@@ -11,6 +11,7 @@ class MainWindow;
 }
 
 #include "NewSession/Setting.h"
+#include "projectfile.h"
 
 class MainWindow : public QMainWindow
 {
@@ -21,9 +22,10 @@ public:
     ~MainWindow();
 
 private:
-    void addSession(SessionSetting &set);
-    QTreeWidgetItem* addSessionProject(SessionSetting &set);
-    void addSessionWindow(SessionSetting &set, QTreeWidgetItem *item);
+    void addSession(Session &set, bool save = true);
+    QTreeWidgetItem* addSessionProject(Session &set);
+    bool addSessionWindow(Session &set, QTreeWidgetItem *item);
+    void loadSession();
 
 private slots:
     void about(void);
@@ -40,6 +42,7 @@ private:
 private:
     Ui::MainWindow *ui;
     QList <QDockWidget*> dwlist;
+    ProjectFile prjfile;
 };
 
 #endif // MAINWINDOW_H

@@ -20,7 +20,7 @@ public:
     explicit TelnetTerm(QWidget *parent = 0);
     ~TelnetTerm();
 
-    void setSettings(SessionSetting &ss);
+    void setSettings(SesParam &ss);
 
 private slots:
     void readData(const QString &data);
@@ -36,7 +36,7 @@ private:
 private:
     Ui::TelnetTerm *ui;
     QTermWidget *term;
-    SessionSetting settings;
+    SesParam settings;
     QtTelnet *telnet;
 };
 

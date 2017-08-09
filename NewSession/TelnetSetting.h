@@ -15,7 +15,7 @@ public:
     explicit TelnetSetting(QWidget *parent = 0);
     ~TelnetSetting();
 
-    void getSetting(SessionSetting &ns);
+    void getSetting(SesParam &ns);
 
 private:
     Ui::TelnetSetting *ui;

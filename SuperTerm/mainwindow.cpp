@@ -15,11 +15,29 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->dockWidget->setWidget(ui->twProject);
+
+    loadSession();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::loadSession()
+{
+    SesList sl;
+
+    prjfile.Load("qstprj.xml");
+    prjfile.GetSessionList(sl);
+
+    for (int i = 0; i < sl.count(); i ++)
+    {
+        Session s;
+
+        s = sl.at(i);
+        addSession(s, false);
+    }
 }
 
 void MainWindow::about(void)
@@ -38,7 +56,7 @@ void MainWindow::on_new_s_triggered()
 
     if (ns->result() == 1)
     {
-        SessionSetting set;
+        Session set;
 
         ns->getSetting(set);
 
@@ -48,13 +66,19 @@ void MainWindow::on_new_s_triggered()
     delete ns;
 }
 
-void MainWindow::addSession(SessionSetting &set)
+void MainWindow::addSession(Session &set, bool save)
 {
     QTreeWidgetItem *child;
 
     child = addSessionProject(set);
 
     addSessionWindow(set, child);
+
+    if (save)
+    {
+        prjfile.AddSession(set);
+        prjfile.Save();
+    }
 
     int cnt = dwlist.count();
     if (cnt > 1)
@@ -67,7 +91,7 @@ void MainWindow::addSession(SessionSetting &set)
     }
 }
 
-QTreeWidgetItem* MainWindow::addSessionProject(SessionSetting &set)
+QTreeWidgetItem* MainWindow::addSessionProject(Session &set)
 {
     QTreeWidgetItem *type = new QTreeWidgetItem;
     bool addtype = true;
@@ -76,7 +100,7 @@ QTreeWidgetItem* MainWindow::addSessionProject(SessionSetting &set)
     {
         QTreeWidgetItem *tmptype = ui->twProject->topLevelItem(i);
 
-        if (tmptype->text(0) == set["type"])
+        if (tmptype->text(0) == set.type)
         {
             delete type;
             type = tmptype;
@@ -85,7 +109,7 @@ QTreeWidgetItem* MainWindow::addSessionProject(SessionSetting &set)
         }
     }
 
-    type->setText(0, set["type"]);
+    type->setText(0, set.type);
     if (addtype)
     {
         QVariant var(0);
@@ -95,7 +119,7 @@ QTreeWidgetItem* MainWindow::addSessionProject(SessionSetting &set)
     }
 
     QTreeWidgetItem *child = new QTreeWidgetItem;
-    child->setText(0, set["name"]);
+    child->setText(0, set.name);
     type->addChild(child);
 
     return child;
@@ -104,34 +128,34 @@ QTreeWidgetItem* MainWindow::addSessionProject(SessionSetting &set)
 #include "Serial/SerialTerm.h"
 #include "Telnet/TelnetTerm.h"
 
-void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
+bool MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
 {
     QDockWidget *dock;
     QVariant var;
     bool add = false;
 
-    dock= new QDockWidget(set["name"], this);
+    dock= new QDockWidget(set.name, this);
     dock->setAllowedAreas(Qt::RightDockWidgetArea);
 
     var.setValue(dock);
 
-    if (set["type"] == "串口终端")
+    if (set.type == "串口终端")
     {
         item->setData(0, Qt::UserRole, var);
 
         SerialTerm *term = new SerialTerm;
-        term->setSettings(set);
+        term->setSettings(set.param, set.id);
 
         dock->setWidget(term);
         add = true;
     }
 
-    if (set["type"] == "telnet")
+    if (set.type == "telnet")
     {
         item->setData(0, Qt::UserRole, var);
 
         TelnetTerm *term = new TelnetTerm;
-        term->setSettings(set);
+        term->setSettings(set.param);
 
         dock->setWidget(term);
         add = true;
@@ -146,6 +170,8 @@ void MainWindow::addSessionWindow(SessionSetting &set, QTreeWidgetItem *item)
     {
         delete dock;
     }
+
+    return add;
 }
 
 void MainWindow::on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int column)

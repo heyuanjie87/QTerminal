@@ -25,21 +25,19 @@ NewSession::~NewSession()
     wSetting.clear();
 }
 
-void NewSession::getSetting(SessionSetting &s)
+void NewSession::getSetting(Session &s)
 {
     QString type;
     Setting *cur;
 
     type = ui->sesType->currentItem()->text();
     cur = wSetting[type];
-    nss["type"] = type;
-    nss["name"] = ui->sesName->text();
+    s.type = type;
+    s.name = ui->sesName->text();
     if (cur != NULL)
     {
-        cur->getSetting(nss);
+        cur->getSetting(s.param);
     }
-
-    s = nss;
 }
 
 void NewSession::on_sesType_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)

@@ -22,6 +22,8 @@ public:
     void tableAddRow(QString &name, QString &type, QString &value, QString &endline);
     QWidget* toolButton(int index = 0);
 
+    void connectDb(QString name);
+
 signals:
     void outData(const QByteArray &data);
 

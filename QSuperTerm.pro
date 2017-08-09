@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport sql network
+QT       += core gui serialport sql network xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -33,7 +33,9 @@ HEADERS += \
     Telnet/TelnetTerm.h \
     Serial/SerialTerm.h \
     SendSave/SendSave.h \
-    SendSave/SSWorker.h
+    SendSave/SSWorker.h \
+    SuperTerm/projectfile.h \
+    NewSession/nstypes.h
 
 SOURCES += \
     SuperTerm/main.cpp \
@@ -49,4 +51,5 @@ SOURCES += \
     Telnet/TelnetTerm.cpp \
     Serial/SerialTerm.cpp \
     SendSave/SendSave.cpp \
-    SendSave/SSWorker.cpp
+    SendSave/SSWorker.cpp \
+    SuperTerm/projectfile.cpp

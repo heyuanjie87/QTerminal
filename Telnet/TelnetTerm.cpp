@@ -20,7 +20,7 @@ TelnetTerm::~TelnetTerm()
     delete ui;
 }
 
-void TelnetTerm::setSettings(SessionSetting &ss)
+void TelnetTerm::setSettings(SesParam &ss)
 {
     settings = ss;
 }

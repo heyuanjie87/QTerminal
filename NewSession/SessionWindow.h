@@ -13,7 +13,7 @@ public:
     explicit SessionWindow();
 
     virtual QWidget* getWindow() = 0;
-    virtual void setSetting(const SessionSetting &ns) = 0;
+    virtual void setSetting(const SesParam &ns) = 0;
     virtual void open() = 0;
     virtual void close() = 0;
 

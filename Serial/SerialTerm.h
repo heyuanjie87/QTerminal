@@ -21,7 +21,7 @@ public:
     explicit SerialTerm(QWidget *parent = 0);
     ~SerialTerm();
 
-    void setSettings(SessionSetting &ss);
+    void setSettings(SesParam &ss, QString id);
 
 private slots:
     void writeData(const QByteArray &data);
@@ -43,7 +43,7 @@ private:
     QTermWidget *term;
     SendSave *dlgSS;
     QSerialPort *serial;
-    SessionSetting settings;
+    SesParam settings;
 };
 
 #endif // SERIALTERM_H

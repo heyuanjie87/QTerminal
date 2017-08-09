@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QMap>
 
-typedef QMap <QString, QString> SessionSetting;
+#include "nstypes.h"
 
 class Setting : public QWidget
 {
@@ -12,7 +12,7 @@ class Setting : public QWidget
 public:
     explicit Setting(QWidget *parent = 0);
 
-    virtual void getSetting(SessionSetting &ns) = 0;
+    virtual void getSetting(SesParam &ns) = 0;
 
 signals:
 

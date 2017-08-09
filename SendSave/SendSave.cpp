@@ -17,13 +17,17 @@ SendSave::SendSave(QWidget *parent) :
     tableInit();
 
     worker = new SSWorker(this);
-    worker->start();
 }
 
 SendSave::~SendSave()
 {
     delete ui;
     delete worker;
+}
+
+void SendSave::connectDb(QString name)
+{
+    worker->connectDb(name);
 }
 
 void SendSave::tableInit()

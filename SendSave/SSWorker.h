@@ -13,6 +13,8 @@ public:
     SSWorker(SendSave *parent);
     ~SSWorker();
 
+    void connectDb(QString name);
+
 private:
     void run();
 
