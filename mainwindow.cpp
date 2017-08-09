@@ -97,6 +97,7 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->addWidget(ui->toolButton);
 
     connect(dlgSS, &dlgSS->outData, this, &MainWindow::writeData);
+    dlgSS->connectDb("save.dblite");
 
     statusBar()->addWidget(dlgSS->toolButton(0));
     statusBar()->addWidget(dlgSS->toolButton(1));
