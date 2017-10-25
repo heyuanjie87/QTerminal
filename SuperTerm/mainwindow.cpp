@@ -131,40 +131,41 @@ QTreeWidgetItem* MainWindow::addSessionProject(Session &set)
 bool MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
 {
     QDockWidget *dock;
-    QVariant var;
     bool add = false;
 
     dock= new QDockWidget(set.name, this);
     dock->setAllowedAreas(Qt::RightDockWidgetArea);
 
-    var.setValue(dock);
-
     if (set.type == "串口终端")
     {
-        item->setData(0, Qt::UserRole, var);
-
         SerialTerm *term = new SerialTerm;
-        term->setSettings(set.param, set.id);
 
+        term->setSettings(set.param, set.id);
         dock->setWidget(term);
         add = true;
     }
 
     if (set.type == "telnet")
     {
-        item->setData(0, Qt::UserRole, var);
-
         TelnetTerm *term = new TelnetTerm;
-        term->setSettings(set.param);
 
+        term->setSettings(set.param);
         dock->setWidget(term);
         add = true;
     }
 
     if (add)
     {
+        QVariant vardock, varid;
+
+        vardock.setValue(dock);
+        varid.setValue(set.id);
+
+        item->setData(0, Qt::UserRole, vardock);
+        item->setData(1, Qt::UserRole, varid);
+
         dwlist.append(dock);
-        addDockWidget(Qt::RightDockWidgetArea, dock);
+        addDockWidget(Qt::RightDockWidgetArea, dock);        
     }
     else
     {
@@ -207,4 +208,16 @@ void MainWindow::on_twProject_customContextMenuRequested(const QPoint &pos)
     popMenu->exec(QCursor::pos());
 
     delete popMenu;
+}
+
+void MainWindow::on_del_s_triggered()
+{
+    QTreeWidgetItem* curItem;
+    QVariant var;
+    QString id;
+
+    curItem = ui->twProject->currentItem();
+    var = curItem->data(1, Qt::UserRole);
+    id = var.value<QString>();
+    prjfile.DelSession(id);
 }

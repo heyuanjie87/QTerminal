@@ -17,6 +17,7 @@ public:
     bool Load(QString filename);
     bool GetSessionList(SesList &sl);
 
+    void DelSession(QString &id);
     void AddSession(Session &ses);
     void Save();
 

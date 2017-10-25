@@ -195,14 +195,41 @@ void ProjectFile::makeSesID(QString &id)
     id = id.sprintf("%d", dt.toTime_t());
 }
 
+void ProjectFile::DelSession(QString &id)
+{
+    QDomNodeList list;
+
+    list = doc->elementsByTagName("type");
+
+    for (int i = 0; i < list.size(); i ++)
+    {
+        QDomNode item = list.item(i);
+        QDomElement type, ele;
+
+        type = item.toElement();
+        ele = type.firstChildElement();
+
+        while (!ele.isNull())
+        {
+            if (ele.attribute("ID") == id)
+            {
+                type.removeChild(ele);
+                Save();
+                return;
+            }
+
+            ele = ele.nextSiblingElement();
+        }
+    }
+}
+
 void ProjectFile::Save()
 {
-    QFile file;
-
     if (!prjfile->open(QIODevice::WriteOnly | QIODevice::Truncate))
         return;
 
     QTextStream out(prjfile);
 
     doc->save(out, 4);
+    prjfile->close();
 }

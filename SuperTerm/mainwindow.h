@@ -36,6 +36,8 @@ private slots:
 
     void on_twProject_customContextMenuRequested(const QPoint &pos);
 
+    void on_del_s_triggered();
+
 private:
     void menuInit(void);
 
