@@ -39,7 +39,7 @@ void SSWorker::connectDb(QString name)
    if (dbSS == NULL)
    {
        dbSS = new QSqlDatabase;
-       *dbSS = QSqlDatabase::addDatabase("QSQLITE");
+       *dbSS = QSqlDatabase::addDatabase("QSQLITE", name);
        dbSS->setDatabaseName(name);
 
        start();
