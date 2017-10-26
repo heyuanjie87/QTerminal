@@ -21,6 +21,9 @@ public:
 
     void getSetting(Session &s);
 
+private:
+    void makeID(QString &id);
+
 private slots:
     void on_sesType_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 

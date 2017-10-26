@@ -27,7 +27,6 @@ public slots:
 
 private:
     void init();
-    void makeSesID(QString &id);
     void addParam(QDomElement &e, Session &ses);
     void getSession(QDomElement &sesEle, Session &ses);
     void getParam(QDomElement &parEle, Session &ses);

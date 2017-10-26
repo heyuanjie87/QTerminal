@@ -3,6 +3,7 @@
 
 #include "SerialSetting.h"
 #include "TelnetSetting.h"
+#include <QDateTime>
 
 NewSession::NewSession(QWidget *parent) :
     QDialog(parent),
@@ -38,6 +39,15 @@ void NewSession::getSetting(Session &s)
     {
         cur->getSetting(s.param);
     }
+    makeID(s.id);
+}
+
+void NewSession::makeID(QString &id)
+{
+    QDateTime dt;
+
+    dt = dt.currentDateTime();
+    id = id.sprintf("%d", dt.toTime_t());
 }
 
 void NewSession::on_sesType_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)

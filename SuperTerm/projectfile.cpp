@@ -4,7 +4,6 @@
 #include <QDomElement>
 #include <QFile>
 #include <QTextStream>
-#include <QDateTime>
 
 ProjectFile::ProjectFile(QObject *parent) : QObject(parent)
 {
@@ -133,7 +132,6 @@ _again:
         {
             QDomElement e;
 
-            makeSesID(ses.id);
             e = doc->createElement("session");
             e.setAttribute("ID", ses.id);
             e.setAttribute("name", ses.name);
@@ -185,14 +183,6 @@ void ProjectFile::init()
     doc->appendChild(*root);
 
     prjfile = new QFile;
-}
-
-void ProjectFile::makeSesID(QString &id)
-{
-    QDateTime dt;
-
-    dt = dt.currentDateTime();
-    id = id.sprintf("%d", dt.toTime_t());
 }
 
 void ProjectFile::DelSession(QString &id)

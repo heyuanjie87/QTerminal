@@ -19,6 +19,7 @@ SSWorker::SSWorker(SendSave *parent)
 
 SSWorker::~SSWorker()
 {
+    dbSS->close();
     delete dbSS;
     delete query;
 }

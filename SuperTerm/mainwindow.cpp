@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QVariant>
 #include <QDockWidget>
+#include <QFile>
 
 #define VERSION    "1.0.0"
 
@@ -221,8 +222,14 @@ void MainWindow::on_del_s_triggered()
 
     ui->tabWidget->removeTab(ui->tabWidget->indexOf(w));
 
+    QFile dbf;
+
+    id += ".dblite";
+
+
     delete w;
     delete curItem;
+    dbf.remove(id);
 }
 
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
