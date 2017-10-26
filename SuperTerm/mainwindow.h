@@ -43,8 +43,8 @@ private:
 
 private:
     Ui::MainWindow *ui;
-    QList <QDockWidget*> dwlist;
     ProjectFile prjfile;
+    QDockWidget *lastdock;
 };
 
 #endif // MAINWINDOW_H

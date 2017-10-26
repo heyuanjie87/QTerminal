@@ -13,10 +13,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    lastdock = NULL;
 
     ui->dockWidget->setWidget(ui->twProject);
 
-    loadSession();
+    loadSession();    
 }
 
 MainWindow::~MainWindow()
@@ -78,16 +79,6 @@ void MainWindow::addSession(Session &set, bool save)
     {
         prjfile.AddSession(set);
         prjfile.Save();
-    }
-
-    int cnt = dwlist.count();
-    if (cnt > 1)
-    {
-        QDockWidget *f, *s;
-
-        f = dwlist.at(cnt - 2);
-        s = dwlist.at(cnt - 1);
-        tabifyDockWidget(f, s);
     }
 }
 
@@ -164,8 +155,12 @@ bool MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
         item->setData(0, Qt::UserRole, vardock);
         item->setData(1, Qt::UserRole, varid);
 
-        dwlist.append(dock);
-        addDockWidget(Qt::RightDockWidgetArea, dock);        
+        addDockWidget(Qt::RightDockWidgetArea, dock);
+        if (lastdock)
+        {
+            tabifyDockWidget(lastdock, dock);
+        }
+        lastdock = dock;
     }
     else
     {
@@ -212,12 +207,38 @@ void MainWindow::on_twProject_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_del_s_triggered()
 {
-    QTreeWidgetItem* curItem;
+    QTreeWidgetItem* curItem, *top;
     QVariant var;
     QString id;
+    QDockWidget* dock;
 
     curItem = ui->twProject->currentItem();
+    top = curItem->parent();
+
     var = curItem->data(1, Qt::UserRole);
     id = var.value<QString>();
     prjfile.DelSession(id);
+
+    var = curItem->data(0, Qt::UserRole);
+    dock = var.value<QDockWidget*>();
+    top->removeChild(curItem);
+
+    if (dock == lastdock)
+    {
+        int cnt;
+        QTreeWidgetItem *next;
+
+        cnt = top->childCount();
+        lastdock = NULL;
+
+        next = top->child(cnt - 1);
+        if (next)
+        {
+            var = next->data(0, Qt::UserRole);
+            lastdock = var.value<QDockWidget*>();
+        }
+    }
+
+    delete dock;
+    delete curItem;
 }

@@ -19,11 +19,16 @@ SerialTerm::SerialTerm(QWidget *parent) :
 
     initSendSave();
     initSerial();
+
+    statusBar()->addWidget(ui->lbParam);
 }
 
 SerialTerm::~SerialTerm()
 {
     delete ui;
+    delete serial;
+    delete dlgSS;
+    delete term;
 }
 
 void SerialTerm::initTerm()
@@ -72,7 +77,10 @@ bool SerialTerm::openSerial()
 void SerialTerm::setSettings(SesParam &ss, QString id)
 {
     settings = ss;
+    QString p;
 
+    p = ss["dev"] + "," + ss["speed"];
+    ui->lbParam->setText(p);
     id += ".dblite";
     dlgSS->connectDb(id);
 }
