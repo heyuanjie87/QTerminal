@@ -24,7 +24,7 @@ public:
 private:
     void addSession(Session &set, bool save = true);
     QTreeWidgetItem* addSessionProject(Session &set);
-    bool addSessionWindow(Session &set, QTreeWidgetItem *item);
+    QWidget* addSessionWindow(Session &set, QTreeWidgetItem *item);
     void loadSession();
 
 private slots:
@@ -38,13 +38,14 @@ private slots:
 
     void on_del_s_triggered();
 
+    void on_tabWidget_tabCloseRequested(int index);
+
 private:
     void menuInit(void);
 
 private:
     Ui::MainWindow *ui;
     ProjectFile prjfile;
-    QDockWidget *lastdock;
 };
 
 #endif // MAINWINDOW_H

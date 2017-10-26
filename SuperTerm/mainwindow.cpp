@@ -13,8 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    lastdock = NULL;
 
+    ui->tabWidget->removeTab(0);
+    ui->tabWidget->removeTab(0);
     ui->dockWidget->setWidget(ui->twProject);
 
     loadSession();    
@@ -70,15 +71,27 @@ void MainWindow::on_new_s_triggered()
 void MainWindow::addSession(Session &set, bool save)
 {
     QTreeWidgetItem *child;
+    QWidget *w;
 
     child = addSessionProject(set);
 
-    addSessionWindow(set, child);
-
-    if (save)
+    w = addSessionWindow(set, child);
+    if (w != NULL)
     {
-        prjfile.AddSession(set);
-        prjfile.Save();
+        QVariant var;
+
+        var.setValue(w);
+        ui->tabWidget->addTab(w, set.name);
+        child->setData(0, Qt::UserRole, var);
+
+        var.setValue(set.id);
+        child->setData(1, Qt::UserRole, var);
+
+        if (save)
+        {
+            prjfile.AddSession(set);
+            prjfile.Save();
+        }
     }
 }
 
@@ -119,21 +132,16 @@ QTreeWidgetItem* MainWindow::addSessionProject(Session &set)
 #include "Serial/SerialTerm.h"
 #include "Telnet/TelnetTerm.h"
 
-bool MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
+QWidget* MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
 {
-    QDockWidget *dock;
-    bool add = false;
-
-    dock= new QDockWidget(set.name, this);
-    dock->setAllowedAreas(Qt::RightDockWidgetArea);
+    QWidget *w = NULL;
 
     if (set.type == "串口终端")
     {
         SerialTerm *term = new SerialTerm;
 
         term->setSettings(set.param, set.id);
-        dock->setWidget(term);
-        add = true;
+        w = term;
     }
 
     if (set.type == "telnet")
@@ -141,48 +149,30 @@ bool MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
         TelnetTerm *term = new TelnetTerm;
 
         term->setSettings(set.param);
-        dock->setWidget(term);
-        add = true;
+        w = term;
     }
 
-    if (add)
-    {
-        QVariant vardock, varid;
-
-        vardock.setValue(dock);
-        varid.setValue(set.id);
-
-        item->setData(0, Qt::UserRole, vardock);
-        item->setData(1, Qt::UserRole, varid);
-
-        addDockWidget(Qt::RightDockWidgetArea, dock);
-        if (lastdock)
-        {
-            tabifyDockWidget(lastdock, dock);
-        }
-        lastdock = dock;
-    }
-    else
-    {
-        delete dock;
-    }
-
-    return add;
+    return w;
 }
 
 void MainWindow::on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int column)
 {
-    QDockWidget *dock;
+    QWidget *w;
     QVariant var;
 
     var = item->data(column, Qt::UserRole);
     if (var == 0)
         return;
 
-    dock = var.value<QDockWidget*>();
-
-    dock->show();
-    dock->raise();
+    w = var.value<QWidget*>();
+    if (ui->tabWidget->indexOf(w) >= 0)
+    {
+        ui->tabWidget->setCurrentWidget(w);
+    }
+    else
+    {
+        ui->tabWidget->addTab(w, item->text(0));
+    }
 }
 
 void MainWindow::on_twProject_customContextMenuRequested(const QPoint &pos)
@@ -210,7 +200,7 @@ void MainWindow::on_del_s_triggered()
     QTreeWidgetItem* curItem, *top;
     QVariant var;
     QString id;
-    QDockWidget* dock;
+    QWidget* w;
 
     curItem = ui->twProject->currentItem();
     top = curItem->parent();
@@ -220,25 +210,16 @@ void MainWindow::on_del_s_triggered()
     prjfile.DelSession(id);
 
     var = curItem->data(0, Qt::UserRole);
-    dock = var.value<QDockWidget*>();
+    w = var.value<QWidget*>();
     top->removeChild(curItem);
 
-    if (dock == lastdock)
-    {
-        int cnt;
-        QTreeWidgetItem *next;
+    ui->tabWidget->removeTab(ui->tabWidget->indexOf(w));
 
-        cnt = top->childCount();
-        lastdock = NULL;
-
-        next = top->child(cnt - 1);
-        if (next)
-        {
-            var = next->data(0, Qt::UserRole);
-            lastdock = var.value<QDockWidget*>();
-        }
-    }
-
-    delete dock;
+    delete w;
     delete curItem;
+}
+
+void MainWindow::on_tabWidget_tabCloseRequested(int index)
+{
+    ui->tabWidget->removeTab(index);
 }

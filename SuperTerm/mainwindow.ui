@@ -13,7 +13,37 @@
   <property name="windowTitle">
    <string>奇梦.终端</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>691</width>
+      <height>481</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <property name="tabsClosable">
+     <bool>true</bool>
+    </property>
+    <property name="tabBarAutoHide">
+     <bool>false</bool>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string/>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+    </widget>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -35,7 +65,7 @@
   <widget class="QDockWidget" name="dockWidget">
    <property name="maximumSize">
     <size>
-     <width>170</width>
+     <width>200</width>
      <height>524287</height>
     </size>
    </property>
@@ -57,16 +87,16 @@
     </property>
     <property name="maximumSize">
      <size>
-      <width>100</width>
+      <width>200</width>
       <height>16777215</height>
      </size>
     </property>
     <widget class="QTreeWidget" name="twProject">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>40</y>
-       <width>170</width>
+       <x>-10</x>
+       <y>30</y>
+       <width>200</width>
        <height>331</height>
       </rect>
      </property>
