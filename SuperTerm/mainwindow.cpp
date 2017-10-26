@@ -203,6 +203,12 @@ void MainWindow::on_del_s_triggered()
     QWidget* w;
 
     curItem = ui->twProject->currentItem();
+    if (curItem == NULL)
+        return;
+    var = curItem->data(0, Qt::UserRole);
+    if (var == 0)
+        return;
+
     top = curItem->parent();
 
     var = curItem->data(1, Qt::UserRole);
