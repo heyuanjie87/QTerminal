@@ -18,7 +18,8 @@ FORMS += \
     NewSession/TelnetSetting.ui \
     Telnet/TelnetTerm.ui \
     Serial/SerialTerm.ui \
-    SendSave/SendSave.ui
+    SendSave/SendSave.ui \
+    Console/console.ui
 
 HEADERS += \
     SuperTerm/mainwindow.h \
@@ -35,7 +36,8 @@ HEADERS += \
     SendSave/SendSave.h \
     SendSave/SSWorker.h \
     SuperTerm/projectfile.h \
-    NewSession/nstypes.h
+    NewSession/nstypes.h \
+    Console/Console.h
 
 SOURCES += \
     SuperTerm/main.cpp \
@@ -52,4 +54,5 @@ SOURCES += \
     Serial/SerialTerm.cpp \
     SendSave/SendSave.cpp \
     SendSave/SSWorker.cpp \
-    SuperTerm/projectfile.cpp
+    SuperTerm/projectfile.cpp \
+    Console/Console.cpp

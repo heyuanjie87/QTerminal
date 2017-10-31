@@ -1,6 +1,7 @@
 #include "QTermScreen.h"
 
 #include <QTextCursor>
+#include <QTextBlock>
 
 QTermScreen::QTermScreen(QWidget *parent):
     QPlainTextEdit(parent)
@@ -229,3 +230,23 @@ void QTermScreen::EraseScreen()
     EraseDown();
     EraseUp();
 }
+
+QByteArray QTermScreen::GetLine(int n)
+{
+    QString str;
+    QByteArray buf;
+    int num;
+
+    num = document()->lineCount();
+    if (n<0)
+        n = num;
+
+    if (n > num)
+        return buf;
+
+    str = document()->findBlockByLineNumber(n - 1).text();
+    buf = str.toStdString().c_str();
+
+    return buf;
+}
+

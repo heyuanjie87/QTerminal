@@ -6,10 +6,27 @@ QTermWidget::QTermWidget(QWidget *parent):
     QTermScreen(parent)
 {
     m_Mode = 0;
+    m_Echo = false;
+    m_SLine = false;
+    m_Cnt = 0;
     setAcceptDrops(false);
+
+    connect(this, SIGNAL(postData(QByteArray)),
+            this, SLOT(putData(QByteArray)), Qt::QueuedConnection);
 }
 
-void QTermWidget::putData(const QByteArray &data)
+void QTermWidget::setEcho(bool en)
+{
+    m_Echo = en;
+}
+
+void QTermWidget::setSendLine(bool en)
+{
+    m_SLine = en;
+    m_Cnt = 0;
+}
+
+void QTermWidget::putData(const QByteArray data)
 {
     if (data.size() == 0)
         return;
@@ -154,6 +171,8 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
     {
     case Qt::Key_Backspace:
         byte[0] = 0x08;
+        if (m_Cnt)
+            m_Cnt --;
         break;
     case Qt::Key_Left:
         byte[0] = 0x1B; byte[1] = 0x5B, byte[2] = 0x44;
@@ -170,15 +189,43 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Enter:
         break;
     case Qt::Key_Return:
+        if (m_SLine)
+        {
+            byte = GetLine();
+            if (byte.size() > m_Cnt)
+            {
+                byte = byte.right(m_Cnt);
+            }
+            byte += "\r\n";
+            emit outData(byte);
+            return;
+        }
+        else
+        {
+            byte = "\r\n";
+            break;
+        }
     default:
         byte = e->text().toLocal8Bit();
         break;
     }
 
-    if (byte.size() != 0)
+    if (isprint(byte.at(0)))
+    {
+        m_Cnt ++;
+    }
+
+    if (m_SLine || m_Echo)
+    {
+        QTermScreen::keyPressEvent(e);
+    }
+
+    if (byte.size() != 0 && !m_SLine)
     {
         emit outData(byte);
     }
+
+
 }
 
 void QTermWidget::parseParam(QVector <int> &param, int np, int defval)

@@ -10,11 +10,15 @@ class QTermWidget : public QTermScreen
 public:
     explicit QTermWidget(QWidget *parent = Q_NULLPTR);
 
+    void setEcho(bool en);
+    void setSendLine(bool en);
+
 public slots:
-    void putData(const QByteArray &data);
+    void putData(const QByteArray data);
 
 signals:
     void outData(const QByteArray &data);
+    void postData(const QByteArray data);
 
 protected:
     virtual void mousePressEvent(QMouseEvent *e);
@@ -35,6 +39,10 @@ private:
     int m_Mode;
     QString m_Param;
     QByteArray m_Text;
+    QByteArray m_Line;
+    bool m_Echo;
+    bool m_SLine;
+    int m_Cnt;
 };
 
 #endif // QTERMWIDGET_H

@@ -132,6 +132,7 @@ QTreeWidgetItem* MainWindow::addSessionProject(Session &set)
 
 #include "Serial/SerialTerm.h"
 #include "Telnet/TelnetTerm.h"
+#include "Console/Console.h"
 
 QWidget* MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
 {
@@ -151,6 +152,13 @@ QWidget* MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
 
         term->setSettings(set.param);
         w = term;
+    }
+
+    if (set.type == "Console")
+    {
+        Console *con = new Console;
+
+        w = con;
     }
 
     return w;

@@ -54,6 +54,11 @@
      <string>telnet</string>
     </property>
    </item>
+   <item>
+    <property name="text">
+     <string>Console</string>
+    </property>
+   </item>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">

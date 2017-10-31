@@ -36,6 +36,8 @@ public:
 
 public:
     void SelectRight(int n = 1);
+    QByteArray GetLine(int n = -1);
+
 };
 
 #endif // QTERMSCREEN_H
