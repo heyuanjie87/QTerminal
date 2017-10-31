@@ -14,11 +14,10 @@ public:
     void setSendLine(bool en);
 
 public slots:
-    void putData(const QByteArray data);
+    void putData(const QByteArray &data);
 
 signals:
     void outData(const QByteArray &data);
-    void postData(const QByteArray data);
 
 protected:
     virtual void mousePressEvent(QMouseEvent *e);
@@ -29,6 +28,7 @@ private:
     void parseParam(QVector<int> &param, int np = 1, int defval = 0);
     void flushText();
     void debug(const QByteArray &data);
+    void gbtou(const QByteArray &gb, QString &u);
 
 private:
     void eraseText(char cmd);

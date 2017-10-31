@@ -1,6 +1,7 @@
 #include "QTermWidget.h"
 
 #include <QApplication>
+#include <QTextCodec>
 
 QTermWidget::QTermWidget(QWidget *parent):
     QTermScreen(parent)
@@ -10,9 +11,6 @@ QTermWidget::QTermWidget(QWidget *parent):
     m_SLine = false;
     m_Cnt = 0;
     setAcceptDrops(false);
-
-    connect(this, SIGNAL(postData(QByteArray)),
-            this, SLOT(putData(QByteArray)), Qt::QueuedConnection);
 }
 
 void QTermWidget::setEcho(bool en)
@@ -26,14 +24,26 @@ void QTermWidget::setSendLine(bool en)
     m_Cnt = 0;
 }
 
-void QTermWidget::putData(const QByteArray data)
+void QTermWidget::gbtou(const QByteArray &gb, QString &u)
 {
+    QTextCodec *codec = QTextCodec::codecForName("GB2312");
+
+    u = codec->toUnicode(gb.data(), gb.size());
+}
+
+void QTermWidget::putData(const QByteArray &data)
+{
+    QString str;
+    QByteArray ud;
+
     if (data.size() == 0)
         return;
 
-    for (int i = 0; i < data.size(); i ++)
+    gbtou(data, str);
+    ud = str.toStdString().c_str();
+    for (int i = 0; i < ud.size(); i ++)
     {
-        recvChar(data[i]);
+        recvChar(ud[i]);
     }
 
     flushText();
@@ -210,7 +220,7 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
         break;
     }
 
-    if (isprint(byte.at(0)))
+    if (byte.size() && isprint(byte.at(0)))
     {
         m_Cnt ++;
     }
