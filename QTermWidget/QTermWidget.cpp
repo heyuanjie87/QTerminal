@@ -206,6 +206,7 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
             {
                 byte = byte.right(m_Cnt);
             }
+            m_Cnt = 0;
             byte += "\r\n";
             emit outData(byte);
             return;
@@ -220,7 +221,7 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
         break;
     }
 
-    if (byte.size() && isprint(byte.at(0)))
+    if (m_SLine && byte.size() && isprint(byte.at(0)))
     {
         m_Cnt ++;
     }

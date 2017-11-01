@@ -13,7 +13,7 @@ Console::Console(QWidget *parent) :
     child = NULL;
     term = new QTermWidget;
     setCentralWidget(term);
-    term->setEcho(true);
+
     term->setSendLine(true);
 
     connect(term, SIGNAL(outData(QByteArray)), this, SLOT(readTerm(QByteArray)));
@@ -26,12 +26,13 @@ Console::~Console()
 {
     delete ui;
 }
-
+#include <QThread>
 void Console::readTerm(const QByteArray &data)
 {
     if (child == NULL)
     {
         QString name;
+        QStringList args;
 
         if (data == "\r\n")
         {
@@ -40,14 +41,22 @@ void Console::readTerm(const QByteArray &data)
         }
 
         child = new QProcess;
-        connect(child, SIGNAL(readyRead()), this, SLOT(readProcess()));
+        connect(child, SIGNAL(readyRead()), this, SLOT(readProcess()), Qt::QueuedConnection);
         connect(child, SIGNAL(finished(int)), this, SLOT(childExited(int)));
 
-        name = data;
-        child->start(name);
-        child->waitForStarted();
-        term->setSendLine(false);
-        term->setEcho(true);
+        name = data.left(data.size() - 2);
+
+        args = name.split(' ');
+        name = args.takeFirst();
+        child->setProcessChannelMode(QProcess::MergedChannels);
+
+        child->start(name,args,QIODevice::ReadWrite);
+        if (!child->waitForStarted())
+        {
+            delete child;
+            child = NULL;
+            term->insertPlainText("执行失败\n");
+        }
     }
     else
     {
@@ -70,5 +79,6 @@ void Console::readProcess()
     QByteArray buf;
 
     buf = child->readAll();
+
     term->putData(buf);
 }
