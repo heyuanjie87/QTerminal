@@ -4,9 +4,9 @@ TARGET = QTerm
 TEMPLATE = app
 
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp \
-    settingsdialog.cpp \
+    simple/main.cpp \
+    simple/mainwindow.cpp \
+    simple/settingsdialog.cpp \
     SendSave/SendSave.cpp \
     SendSave/SSWorker.cpp \
     QTermWidget/QTermScreen.cpp \
@@ -16,8 +16,8 @@ SOURCES += \
     Modem/crc16.c
 
 HEADERS += \
-    mainwindow.h \
-    settingsdialog.h \
+    simple/mainwindow.h \
+    simple/settingsdialog.h \
     SendSave/SendSave.h \
     SendSave/SSWorker.h \
     QTermWidget/QTermScreen.h \
@@ -27,10 +27,10 @@ HEADERS += \
     Modem/crc.h
 
 FORMS += \
-    mainwindow.ui \
-    settingsdialog.ui \
+    simple/mainwindow.ui \
+    simple/settingsdialog.ui \
     SendSave/SendSave.ui \
     Modem/modem.ui
 
 RESOURCES += \
-    terminal.qrc
+    simple/terminal.qrc
