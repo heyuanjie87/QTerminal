@@ -3,6 +3,7 @@
 
 #include "QTermWidget/QTermWidget.h"
 #include <QProcess>
+#include <QDir>
 
 Console::Console(QWidget *parent) :
     QMainWindow(parent),
@@ -31,7 +32,7 @@ void Console::readTerm(const QByteArray &data)
 {
     if (child == NULL)
     {
-        QString name;
+        QString str;
         QStringList args;
 
         if (data == "\r\n")
@@ -40,17 +41,27 @@ void Console::readTerm(const QByteArray &data)
             return;
         }
 
-        child = new QProcess;
+        str = data.left(data.size() - 2);
+
+        if (data.left(2) == "cd")
+        {
+            QDir dir;
+            QString path;
+
+            path = str.right(str.size() - 3);
+            dir.setCurrent(path);
+            return;
+        }
+
+        child = new QProcess(this);
         connect(child, SIGNAL(readyRead()), this, SLOT(readProcess()), Qt::QueuedConnection);
         connect(child, SIGNAL(finished(int)), this, SLOT(childExited(int)));
 
-        name = data.left(data.size() - 2);
-
-        args = name.split(' ');
-        name = args.takeFirst();
+        args = str.split(' ');
+        str = args.takeFirst();
         child->setProcessChannelMode(QProcess::MergedChannels);
 
-        child->start(name,args,QIODevice::ReadWrite);
+        child->start(str, args,QIODevice::ReadWrite);
         if (!child->waitForStarted())
         {
             delete child;

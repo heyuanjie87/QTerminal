@@ -183,6 +183,8 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
         byte[0] = 0x08;
         if (m_Cnt)
             m_Cnt --;
+        else
+            goto out;
         break;
     case Qt::Key_Left:
         byte[0] = 0x1B; byte[1] = 0x5B, byte[2] = 0x44;
@@ -231,6 +233,7 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
         QTermScreen::keyPressEvent(e);
     }
 
+out:
     if (byte.size() != 0 && !m_SLine)
     {
         emit outData(byte);

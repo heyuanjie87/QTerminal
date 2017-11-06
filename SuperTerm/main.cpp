@@ -7,8 +7,5 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    setvbuf(stdout, NULL, _IONBF, 0);
-    setvbuf(stdin, NULL, _IONBF, 0);
-
     return a.exec();
 }
