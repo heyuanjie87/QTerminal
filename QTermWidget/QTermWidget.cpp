@@ -262,8 +262,6 @@ out:
     {
         emit outData(byte);
     }
-
-
 }
 
 void QTermWidget::keyReleaseEvent(QKeyEvent *e)

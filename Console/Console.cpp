@@ -75,6 +75,10 @@ void Console::readTerm(const QByteArray &data)
             child = NULL;
             term->insertPlainText("执行失败\n");
         }
+        else
+        {
+            term->setSendLine(false);
+        }
     }
     else
     {
@@ -95,6 +99,9 @@ void Console::childExited(int err)
 void Console::readProcess()
 {
     QByteArray buf;
+
+    if (child == NULL)
+        return;
 
     buf = child->readAll();
 

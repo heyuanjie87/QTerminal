@@ -239,12 +239,12 @@ QByteArray QTermScreen::GetLine(int n)
 
     num = document()->lineCount();
     if (n<0)
-        n = num;
+        n = textCursor().blockNumber();
 
-    if (n > num)
+    if (n > num - 1)
         return buf;
 
-    str = document()->findBlockByLineNumber(n - 1).text();
+    str = document()->findBlockByLineNumber(n).text();
     buf = str.toStdString().c_str();
 
     return buf;
