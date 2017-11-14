@@ -50,6 +50,7 @@ void Console::readTerm(const QByteArray &data)
             QString path;
 
             path = str.right(str.size() - 3);
+
             dir.setCurrent(path);
             path = "\n" + dir.currentPath() + ">";
 
