@@ -19,15 +19,16 @@ Console::Console(QWidget *parent) :
 
     connect(term, SIGNAL(outData(QByteArray)), this, SLOT(readTerm(QByteArray)));
 
-    prompt = "\nqmzd>";
+    prompt = "qmzd>";
     term->putData(prompt);
+    prompt = "\r\n" + prompt;
 }
 
 Console::~Console()
 {
     delete ui;
 }
-#include <QThread>
+
 void Console::readTerm(const QByteArray &data)
 {
     if (child == NULL)
@@ -50,6 +51,11 @@ void Console::readTerm(const QByteArray &data)
 
             path = str.right(str.size() - 3);
             dir.setCurrent(path);
+            path = "\n" + dir.currentPath() + ">";
+
+            prompt = path.toStdString().c_str();
+            term->putData(prompt);
+
             return;
         }
 
