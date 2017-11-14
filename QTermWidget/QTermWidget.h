@@ -22,6 +22,8 @@ signals:
 protected:
     virtual void mousePressEvent(QMouseEvent *e);
     virtual void keyPressEvent(QKeyEvent *e);
+    virtual void wheelEvent(QWheelEvent *e);
+    virtual void keyReleaseEvent(QKeyEvent *e);
 
 private:
     void recvChar(char ch);
@@ -43,6 +45,7 @@ private:
     bool m_Echo;
     bool m_SLine;
     int m_Cnt;
+    bool ctrl_press;
 };
 
 #endif // QTERMWIDGET_H

@@ -10,6 +10,8 @@ QTermWidget::QTermWidget(QWidget *parent):
     m_Echo = false;
     m_SLine = false;
     m_Cnt = 0;
+    ctrl_press = false;
+
     setAcceptDrops(false);
 }
 
@@ -173,12 +175,34 @@ void QTermWidget::mousePressEvent(QMouseEvent *e)
     setFocus();
 }
 
+void QTermWidget::wheelEvent(QWheelEvent *e)
+{
+    if (ctrl_press)
+    {
+        if (e->delta() > 0)
+        {
+            zoomIn();
+        }
+        else
+        {
+            zoomOut();
+        }
+    }
+    else
+    {
+        QTermScreen::wheelEvent(e);
+    }
+}
+
 void QTermWidget::keyPressEvent(QKeyEvent *e)
 {
     QByteArray byte;
 
     switch (e->key())
     {
+    case Qt::Key_Control:
+        ctrl_press = true;
+        break;
     case Qt::Key_Backspace:
         byte[0] = 0x08;
         if (m_Cnt)
@@ -240,6 +264,14 @@ out:
     }
 
 
+}
+
+void QTermWidget::keyReleaseEvent(QKeyEvent *e)
+{
+    if (e->key() == Qt::Key_Control)
+    {
+        ctrl_press = false;
+    }
 }
 
 void QTermWidget::parseParam(QVector <int> &param, int np, int defval)
