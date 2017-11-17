@@ -9,6 +9,9 @@ class Console;
 
 class QTermWidget;
 class QProcess;
+class Pty;
+
+#include "NewSession/Setting.h"
 
 class Console : public QMainWindow
 {
@@ -18,16 +21,20 @@ public:
     explicit Console(QWidget *parent = 0);
     ~Console();
 
+    void setSettings(SesParam &parm, QString id);
+
 private slots:
-    void readProcess();
-    void readTerm(const QByteArray &data);
-    void childExited(int err);
+    void readPty();
+    void writePty(const QByteArray &data);
+
+private:
+    void startShell(QString fullpath, QString arg = "");
 
 private:
     Ui::Console *ui;
     QTermWidget *term;
     QProcess *child;
-    QByteArray prompt;
+    Pty *pty;
 };
 
 #endif // CONSOLE_H

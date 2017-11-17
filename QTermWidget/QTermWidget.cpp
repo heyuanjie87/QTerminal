@@ -2,6 +2,8 @@
 
 #include <QApplication>
 #include <QTextCodec>
+#include <QMenu>
+#include <QClipboard>
 
 QTermWidget::QTermWidget(QWidget *parent):
     QTermScreen(parent)
@@ -224,6 +226,40 @@ void QTermWidget::wheelEvent(QWheelEvent *e)
     }
 }
 
+void QTermWidget::paste()
+{
+    const QMimeData* md = QApplication::clipboard()->mimeData();
+
+    if(md)
+    {
+        QString str;
+        QByteArray buf;
+
+        if(QApplication::clipboard()->mimeData(QClipboard::Selection))
+        {
+            str = QApplication::clipboard()->text(QClipboard::Selection);
+        }
+        else
+        {
+            str = QApplication::clipboard()->text();
+        }
+
+        buf = str.toStdString().c_str();
+        emit outData(buf);
+    }
+}
+
+void QTermWidget::contextMenuEvent(QContextMenuEvent *e)
+{
+    QMenu* menu = new QMenu(this);
+
+    menu->addSeparator();
+    menu->addAction(QString("粘贴"), this, SLOT(paste()));
+    menu->exec(e->globalPos());
+
+    delete menu;
+}
+
 void QTermWidget::keyPressEvent(QKeyEvent *e)
 {
     QByteArray byte;
@@ -235,10 +271,6 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
         break;
     case Qt::Key_Backspace:
         byte[0] = 0x08;
-        if (m_Cnt)
-            m_Cnt --;
-        else
-            goto out;
         break;
     case Qt::Key_Left:
         byte[0] = 0x1B; byte[1] = 0x5B, byte[2] = 0x44;
@@ -255,21 +287,12 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Enter:
         break;
     case Qt::Key_Return:
-        if (m_SLine)
+        byte = "\r\n";
+        break;
+    case Qt::Key_C:
+        if (ctrl_press)
         {
-            byte = GetLine();
-            if (byte.size() > m_Cnt)
-            {
-                byte = byte.right(m_Cnt);
-            }
-            m_Cnt = 0;
-            byte += "\r\n";
-            emit outData(byte);
-            return;
-        }
-        else
-        {
-            byte = "\r\n";
+            byte[0] = 0x03;
             break;
         }
     default:
@@ -277,18 +300,7 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
         break;
     }
 
-    if (m_SLine && byte.size() && isprint(byte.at(0)))
-    {
-        m_Cnt ++;
-    }
-
-    if (m_SLine || m_Echo)
-    {
-        QTermScreen::keyPressEvent(e);
-    }
-
-out:
-    if (byte.size() != 0 && !m_SLine)
+    if (byte.size() != 0)
     {
         emit outData(byte);
     }

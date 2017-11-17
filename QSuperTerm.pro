@@ -37,7 +37,8 @@ HEADERS += \
     SendSave/SSWorker.h \
     SuperTerm/projectfile.h \
     NewSession/nstypes.h \
-    Console/Console.h
+    Console/Console.h \
+    Console/pty.h
 
 SOURCES += \
     SuperTerm/main.cpp \
@@ -55,4 +56,10 @@ SOURCES += \
     SendSave/SendSave.cpp \
     SendSave/SSWorker.cpp \
     SuperTerm/projectfile.cpp \
-    Console/Console.cpp
+    Console/Console.cpp \
+    Console/pty.cpp
+
+win:
+{
+LIBS += -L$$PWD/./ -lwinpty
+}
