@@ -40,9 +40,9 @@ void QTermWidget::putData(const QByteArray &data)
 
     if (data.size() == 0)
         return;
-
+debug(data);
     gbtou(data, str);
-    ud = str.toStdString().c_str();
+    ud = data;//str.toStdString().c_str();
     for (int i = 0; i < ud.size(); i ++)
     {
         recvChar(ud[i]);
@@ -112,6 +112,10 @@ void QTermWidget::recvChar(char ch)
         {
             m_Mode = 2;
         }break;
+        case ']':
+        {
+            m_Mode = 4;
+        }break;
         default:
         {
             m_Mode = 0;
@@ -124,10 +128,31 @@ void QTermWidget::recvChar(char ch)
         {
         case '0':
         case '1':
+        case '2':
+        case '5':
         {}break;
         case 'h':
+        case 'l':
         {
             m_Mode = 0;
+        }break;
+        }
+    }break;
+    case 4:
+    {
+        switch (ch)
+        {
+        case '0':
+        case ';':
+        {}break;
+        case 0x07:
+        {
+            m_Mode = 0;
+            setTitle();
+        }break;
+        default:
+        {
+            m_Param.push_back(ch);
         }break;
         }
     }break;
@@ -167,6 +192,11 @@ void QTermWidget::recvChar(char ch)
         }
     }break;
     }
+}
+
+void QTermWidget::setTitle()
+{
+
 }
 
 void QTermWidget::mousePressEvent(QMouseEvent *e)

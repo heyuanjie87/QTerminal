@@ -36,6 +36,7 @@ private:
     void eraseText(char cmd);
     void moveCursor(char cmd);
     void setDisplay();
+    void setTitle();
 
 private:
     int m_Mode;
