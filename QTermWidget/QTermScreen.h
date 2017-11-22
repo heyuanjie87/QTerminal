@@ -25,6 +25,7 @@ public:
     void DisplayReset();
     void DisplayForeground(QColor &color);
     void DisplayBackground(QColor &color);
+    void DisplayColor(QColor &b, QColor &f);
 
 public:
     void EraseEndOfLine();
@@ -38,6 +39,9 @@ public:
     void SelectRight(int n = 1);
     QByteArray GetLine(int n = -1);
 
+private:
+    QColor bcolor;
+    QColor fcolor;
 };
 
 #endif // QTERMSCREEN_H

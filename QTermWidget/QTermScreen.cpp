@@ -28,6 +28,7 @@ void QTermScreen::CursorNewLine(int n)
     do
     {
         tc.movePosition(QTextCursor::EndOfBlock);
+
         if (tc.atEnd())
         {
             tc.insertBlock();
@@ -41,6 +42,8 @@ void QTermScreen::CursorNewLine(int n)
     }while (n > 0);
 
     setTextCursor(tc);
+
+    DisplayColor(bcolor, fcolor);
 }
 
 void QTermScreen::SelectRight(int n)
@@ -129,18 +132,37 @@ void QTermScreen::CursorPosition(int row, int column)
 void QTermScreen::DisplayForeground(QColor &color)
 {
     QTextCharFormat fmt;
-
-    fmt.setForeground(color);
     QTextCursor cursor = textCursor();
-    cursor.mergeCharFormat(fmt);
+
+    fmt = cursor.charFormat();
+    fmt.setForeground(color);
+
+    cursor.setCharFormat(fmt);
     setTextCursor(cursor);
+
+    fcolor = color;
 }
 
 void QTermScreen::DisplayBackground(QColor &color)
 {
     QTextCharFormat fmt;
+    QTextCursor cursor = textCursor();
 
+    fmt = cursor.charFormat();
     fmt.setBackground(color);
+
+    cursor.setCharFormat(fmt);
+    setTextCursor(cursor);
+
+    bcolor = color;
+}
+
+void QTermScreen::DisplayColor(QColor &b, QColor &f)
+{
+    QTextCharFormat fmt;
+
+    fmt.setBackground(b);
+    fmt.setForeground(f);
     QTextCursor cursor = textCursor();
     cursor.mergeCharFormat(fmt);
     setTextCursor(cursor);
@@ -151,7 +173,7 @@ QColor QTermScreen::GetColor(int col)
     QColor color[8] =
     {
         "black", "red", "green", "yellow",
-        "blue", "magenta", "cyan", "white"
+        "deepskyblue", "magenta", "cyan", "white"
     };
 
     if (col >= 0 && col <= 7)
