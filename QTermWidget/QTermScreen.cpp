@@ -11,6 +11,9 @@ QTermScreen::QTermScreen(QWidget *parent):
     p.setColor(QPalette::Text, Qt::white);
     setPalette(p);
     setLineWrapMode(NoWrap);
+
+    bcolor = p.color(QPalette::Base);
+    fcolor = p.color(QPalette::Text);
 }
 
 void QTermScreen::CursorStartOfLine()
