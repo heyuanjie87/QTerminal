@@ -180,8 +180,6 @@ void Ymodem::run()
         goto err;
     }
 
-    msgq_push(mcREQ);
-
     Stage = msFirst;
     isrun = true;
 
