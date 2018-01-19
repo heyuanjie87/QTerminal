@@ -22,6 +22,7 @@ public:
     void getFile(QString &name);
     void startTransfer(char type = 'C');
     void showStatus(const char *s);
+    void showStatus(QString &s);
 
 public Q_SLOTS:
     void putData(const QByteArray &data);

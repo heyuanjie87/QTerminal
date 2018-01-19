@@ -199,7 +199,7 @@ void Ymodem::run()
             {
                 QFileInfo info(filename);
 
-                showStatus("第一次传输请求");
+                showStatus("请求传输文件");
                 stext = info.fileName().toStdString();
                 remain = file.size();
                 filesize = remain;
@@ -221,7 +221,7 @@ void Ymodem::run()
             {
             case mcREQ:
             {
-                showStatus("第二次传输请求");
+                showStatus("请求传输数据");
                 Stage = msTrans;
                 time_start();
             }

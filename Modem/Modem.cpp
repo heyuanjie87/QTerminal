@@ -37,9 +37,13 @@ void Modem::showTransfer(int total, int remain, float speed)
     QString fmt;
 
     p = ((total - remain)/(float)total) * 100;
-    fmt = fmt.fromLocal8Bit("%1%").arg(QString::number(p, 'f', 1));
+    fmt = fmt.fromLocal8Bit("%1%").arg(QString::number(p, 'f', 2));
     ui->progress->setValue((int)p);
     ui->progress->setFormat(fmt);
+
+    fmt = fmt.sprintf("速度:%.2fKB/S 剩余:%d/%dKB",
+                      speed/1024, remain/1024, total/1024);
+    showStatus(fmt);
 }
 
 void Modem::startTransfer(char type)
@@ -55,6 +59,11 @@ void Modem::putData(const QByteArray &data)
 }
 
 void Modem::showStatus(const char *s)
+{
+    ui->lbmsg->setText(s);
+}
+
+void Modem::showStatus(QString &s)
 {
     ui->lbmsg->setText(s);
 }
