@@ -2,7 +2,7 @@
 #define NETASSIST_H
 
 #include <QMainWindow>
-#include "NewSession/Setting.h"
+#include "NewSession/nstypes.h"
 
 namespace Ui {
 class NetAssist;

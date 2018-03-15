@@ -10,7 +10,7 @@ NetAssist::NetAssist(QWidget *parent) :
     ui(new Ui::NetAssist)
 {
     ui->setupUi(this);
-
+    udpServer = NULL;
     initSendSave();
 }
 
@@ -18,6 +18,7 @@ NetAssist::~NetAssist()
 {
     delete ui;
     delete dlgSS;
+    delete udpServer;
 }
 
 void NetAssist::setSettings(Session &ss)
@@ -46,10 +47,10 @@ void NetAssist::initSendSave()
 
 void NetAssist::initNet(Session &ss)
 {
-    ui->lport->setText(ss.param["port"]);
+    ui->lport->setText(ss.param["lport"]);
 
     udpServer = new QUdpSocket(this);
-
+    ui->cbrip->setCurrentText(ss.param["rhost"]);
     connect(udpServer, SIGNAL(readyRead()), this, SLOT(udpServerReadData()));
 }
 

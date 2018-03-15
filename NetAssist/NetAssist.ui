@@ -168,11 +168,6 @@
      <property name="editable">
       <bool>true</bool>
      </property>
-     <item>
-      <property name="text">
-       <string>192.168.1.199:5000</string>
-      </property>
-     </item>
     </widget>
     <widget class="QPushButton" name="discon">
      <property name="geometry">

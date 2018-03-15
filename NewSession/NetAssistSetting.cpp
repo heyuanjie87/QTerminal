@@ -16,5 +16,6 @@ NetAssistSetting::~NetAssistSetting()
 void NetAssistSetting::getSetting(SesParam &ns)
 {
     ns["ptype"] = ui->ptype->currentText();
-    ns["port"] = ui->port->text();
+    ns["lport"] = ui->lport->text();
+    ns["rhost"] = ui->rhost->text();
 }
