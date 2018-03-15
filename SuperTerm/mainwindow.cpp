@@ -133,6 +133,7 @@ QTreeWidgetItem* MainWindow::addSessionProject(Session &set)
 #include "Serial/SerialTerm.h"
 #include "Telnet/TelnetTerm.h"
 #include "Console/Console.h"
+#include "NetAssist/NetAssist.h"
 
 QWidget* MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
 {
@@ -159,6 +160,14 @@ QWidget* MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
         Console *con = new Console;
 
         con->setSettings(set.param, set.id);
+        w = con;
+    }
+
+    if (set.type == "网络助手")
+    {
+        NetAssist *con = new NetAssist;
+
+        con->setSettings(set);
         w = con;
     }
 

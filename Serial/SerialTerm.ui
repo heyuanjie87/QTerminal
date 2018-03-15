@@ -27,19 +27,6 @@
      <string>连接</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btRecord">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>420</y>
-      <width>41</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>记录</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="lbParam">
     <property name="geometry">
      <rect>

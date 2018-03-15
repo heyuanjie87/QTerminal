@@ -212,7 +212,16 @@ QWidget* SendSave::toolButton(int index)
     case 2:
         bt = ui->send3;
         break;
+    case 3:
+        bt = ui->show;
+        break;
     }
 
     return bt;
+}
+
+void SendSave::on_show_clicked()
+{
+    show();
+    activateWindow();
 }

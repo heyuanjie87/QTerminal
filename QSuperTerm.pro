@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = QSuperTerm
 TEMPLATE = app
+DESTDIR  = bin
 
 FORMS += \
     SuperTerm/mainwindow.ui \
@@ -19,7 +20,9 @@ FORMS += \
     Telnet/TelnetTerm.ui \
     Serial/SerialTerm.ui \
     SendSave/SendSave.ui \
-    Console/console.ui
+    Console/console.ui \
+    NetAssist/NetAssist.ui \
+    NewSession/NetAssistSetting.ui
 
 HEADERS += \
     SuperTerm/mainwindow.h \
@@ -38,7 +41,9 @@ HEADERS += \
     SuperTerm/projectfile.h \
     NewSession/nstypes.h \
     Console/Console.h \
-    Console/pty.h
+    Console/pty.h \
+    NetAssist/NetAssist.h \
+    NewSession/NetAssistSetting.h
 
 SOURCES += \
     SuperTerm/main.cpp \
@@ -57,7 +62,9 @@ SOURCES += \
     SendSave/SSWorker.cpp \
     SuperTerm/projectfile.cpp \
     Console/Console.cpp \
-    Console/pty.cpp
+    Console/pty.cpp \
+    NetAssist/NetAssist.cpp \
+    NewSession/NetAssistSetting.cpp
 
 win:
 {

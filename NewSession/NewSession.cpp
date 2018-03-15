@@ -1,9 +1,10 @@
 #include "NewSession.h"
 #include "ui_NewSession.h"
+#include <QDateTime>
 
 #include "SerialSetting.h"
 #include "TelnetSetting.h"
-#include <QDateTime>
+#include "NetAssistSetting.h"
 
 NewSession::NewSession(QWidget *parent) :
     QDialog(parent),
@@ -18,6 +19,7 @@ NewSession::NewSession(QWidget *parent) :
 
     wSetting["串口终端"] = sset;
     wSetting["telnet"] = new TelnetSetting;
+    wSetting["网络助手"] = new NetAssistSetting;
 }
 
 NewSession::~NewSession()

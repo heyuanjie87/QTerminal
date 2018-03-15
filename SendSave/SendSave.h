@@ -49,6 +49,8 @@ private slots:
 
     void on_send_clicked();
 
+    void on_show_clicked();
+
 private:
     Ui::SendSave *ui;
     SSWorker *worker;

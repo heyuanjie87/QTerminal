@@ -28,8 +28,6 @@ private slots:
     void readData();
 
 private slots:
-    void on_btRecord_clicked();
-
     void on_btConnect_clicked();
 
 private:

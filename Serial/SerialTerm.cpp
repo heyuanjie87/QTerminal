@@ -15,7 +15,6 @@ SerialTerm::SerialTerm(QWidget *parent) :
     initTerm();
 
     statusBar()->addWidget(ui->btConnect);
-    statusBar()->addWidget(ui->btRecord);
 
     initSendSave();
     initSerial();
@@ -46,6 +45,7 @@ void SerialTerm::initSendSave()
     statusBar()->addWidget(dlgSS->toolButton(0));
     statusBar()->addWidget(dlgSS->toolButton(1));
     statusBar()->addWidget(dlgSS->toolButton(2));
+    statusBar()->addWidget(dlgSS->toolButton(3));
 
     connect(dlgSS, SIGNAL(outData(QByteArray)), this, SLOT(writeData(QByteArray)));
 }
@@ -97,12 +97,6 @@ void SerialTerm::readData()
     data = serial->readAll();
 
     term->putData(data);
-}
-
-void SerialTerm::on_btRecord_clicked()
-{
-    dlgSS->show();
-    dlgSS->activateWindow();
 }
 
 void SerialTerm::on_btConnect_clicked()
