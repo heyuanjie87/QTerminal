@@ -42,7 +42,7 @@ void NetAssist::initSendSave()
     statusBar()->addWidget(dlgSS->toolButton(2));
     statusBar()->addWidget(dlgSS->toolButton(3));
 
-    connect(dlgSS, SIGNAL(outData(QByteArray)), this, SLOT(writeData(QByteArray)));
+    connect(dlgSS, SIGNAL(outData(QByteArray)), this, SLOT(recordSend(QByteArray)));
 }
 
 void NetAssist::initNet(Session &ss)
@@ -71,8 +71,14 @@ void NetAssist::udpServerReadData()
     } while (udpServer->hasPendingDatagrams());
 }
 
-void NetAssist::writeData(QByteArray buf)
+void NetAssist::recordSend(QByteArray buf)
 {
+    QString str;
+
+    str = buf;
+    ui->pesend->clear();
+    ui->pesend->appendPlainText(str);
+
     udpSend(buf);
 }
 

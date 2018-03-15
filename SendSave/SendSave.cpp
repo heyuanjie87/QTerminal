@@ -90,6 +90,9 @@ void SendSave::tableAddRow(QString &name, QString &type, QString &value, QString
     item->setText(endline);
     ui->tbSave->setItem(row, 2, item);
 
+    item = new QTableWidgetItem("发送");
+    ui->tbSave->setVerticalHeaderItem(row, item);
+
     setBtName(row, name);
 }
 

@@ -25,7 +25,7 @@ private slots:
     void on_open_clicked();
 
 private slots:
-    void writeData(QByteArray buf);
+    void recordSend(QByteArray buf);
     void udpServerReadData();
 
     void on_rcvclear_clicked();
