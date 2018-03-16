@@ -4,6 +4,7 @@
 #include "SendSave/SendSave.h"
 
 #include <QUdpSocket>
+#include <QNetworkInterface>
 
 NetAssist::NetAssist(QWidget *parent) :
     QMainWindow(parent),
@@ -47,8 +48,18 @@ void NetAssist::initSendSave()
 
 void NetAssist::initNet(Session &ss)
 {
-    ui->lport->setText(ss.param["lport"]);
+    QList<QHostAddress> ipAL = QNetworkInterface::allAddresses();
 
+    ui->lport->setValue(ss.param["lport"].toUShort());
+    ui->ptype->setText(ss.param["ptype"]);
+    foreach (QHostAddress ip, ipAL)
+    {
+        bool ok;
+
+        ip.toIPv4Address(&ok);
+        if (ok)
+            ui->lip->addItem(ip.toString());
+    }
     udpServer = new QUdpSocket(this);
     ui->cbrip->setCurrentText(ss.param["rhost"]);
     connect(udpServer, SIGNAL(readyRead()), this, SLOT(udpServerReadData()));
@@ -89,9 +100,11 @@ void NetAssist::on_open_clicked()
 
     if (ui->open->text() == "打开")
     {
+        QHostAddress ha(ui->lip->currentText());
+
         lport = ui->lport->text().toUShort();
         udpServer->abort();
-        ok = udpServer->bind(lport);
+        ok = udpServer->bind(ha, lport);
         if (ok)
             ui->open->setText("关闭");
     }
