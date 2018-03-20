@@ -94,11 +94,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(term, &term->outData, this, &MainWindow::writeData);
 
     dlgSS = new SendSave;
-    statusBar()->addWidget(ui->toolButton);
 
     connect(dlgSS, &dlgSS->outData, this, &MainWindow::writeData);
     dlgSS->connectDb("save.dblite");
 
+    statusBar()->addWidget(dlgSS->toolButton(3));
     statusBar()->addWidget(dlgSS->toolButton(0));
     statusBar()->addWidget(dlgSS->toolButton(1));
     statusBar()->addWidget(dlgSS->toolButton(2));
@@ -269,11 +269,6 @@ void MainWindow::initActionsConnections()
 void MainWindow::showStatusMessage(const QString &message)
 {
     status->setText(message);
-}
-
-void MainWindow::on_toolButton_clicked()
-{
-    dlgSS->show();
 }
 
 void MainWindow::on_actionClear_triggered()

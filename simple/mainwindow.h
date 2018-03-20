@@ -96,7 +96,6 @@ private slots:
     void handleError(QSerialPort::SerialPortError error);
     void showStatus(string s);
     void exitTransfer();
-    void on_toolButton_clicked();
 
     void on_actionClear_triggered();
 
