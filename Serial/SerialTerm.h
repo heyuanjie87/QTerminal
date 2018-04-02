@@ -2,6 +2,7 @@
 #define SERIALTERM_H
 
 #include <QMainWindow>
+#include <QSerialPort>
 
 namespace Ui {
 class SerialTerm;
@@ -9,7 +10,6 @@ class SerialTerm;
 
 class QTermWidget;
 class SendSave;
-class QSerialPort;
 
 #include "NewSession/Setting.h"
 
@@ -26,6 +26,7 @@ public:
 private slots:
     void writeData(const QByteArray &data);
     void readData();
+    void error(QSerialPort::SerialPortError e);
 
 private slots:
     void on_btConnect_clicked();

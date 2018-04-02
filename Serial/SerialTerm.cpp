@@ -4,8 +4,6 @@
 #include "QTermWidget/QTermWidget.h"
 #include "SendSave/SendSave.h"
 
-#include <QSerialPort>
-
 SerialTerm::SerialTerm(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SerialTerm)
@@ -55,6 +53,16 @@ void SerialTerm::initSerial()
     serial = new QSerialPort;
 
     connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(serial, SIGNAL(error(QSerialPort::SerialPortError)),
+            this, SLOT(error(QSerialPort::SerialPortError)));
+}
+
+void SerialTerm::error(QSerialPort::SerialPortError e)
+{
+    if (e == QSerialPort::PermissionError)
+    {
+        ui->btConnect->setText(QString("连接"));
+    }
 }
 
 bool SerialTerm::openSerial()
