@@ -22,7 +22,7 @@ FORMS += \
     SendSave/SendSave.ui \
     Console/console.ui \
     NetAssist/NetAssist.ui \
-    NewSession/NetAssistSetting.ui
+    NewSession/NetAssistSetting.ui \
 
 HEADERS += \
     SuperTerm/mainwindow.h \
@@ -43,7 +43,14 @@ HEADERS += \
     Console/Console.h \
     Console/pty.h \
     NetAssist/NetAssist.h \
-    NewSession/NetAssistSetting.h
+    NewSession/NetAssistSetting.h \
+    KConfig/expr.h \
+    KConfig/list.h \
+    KConfig/lkc.h \
+    KConfig/lkc_proto.h \
+    KConfig/qconf.h \
+    KConfig/QKconfig.h
+
 
 SOURCES += \
     SuperTerm/main.cpp \
@@ -64,9 +71,21 @@ SOURCES += \
     Console/Console.cpp \
     Console/pty.cpp \
     NetAssist/NetAssist.cpp \
-    NewSession/NetAssistSetting.cpp
+    NewSession/NetAssistSetting.cpp \
+    KConfig/qconf.cpp \
+    KConfig/QKconfig.cpp \
+    KConfig/confdata.c \
+    KConfig/expr.c \
+    KConfig/images.c \
+    KConfig/menu.c \
+    KConfig/symbol.c \
+    KConfig/util.c \
+    KConfig/zconf.hash.c \
+    KConfig/zconf.lex.c \
+    KConfig/zconf.tab.c
 
 win:
 {
 LIBS += -L$$PWD/./ -lwinpty
 }
+LIBS += -lregex

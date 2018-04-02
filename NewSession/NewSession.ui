@@ -64,6 +64,11 @@
      <string>网络助手</string>
     </property>
    </item>
+   <item>
+    <property name="text">
+     <string>Kconfig</string>
+    </property>
+   </item>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">

@@ -137,6 +137,7 @@ QTreeWidgetItem* MainWindow::addSessionProject(Session &set)
 #include "Telnet/TelnetTerm.h"
 #include "Console/Console.h"
 #include "NetAssist/NetAssist.h"
+#include "KConfig/qconf.h"
 
 QWidget* MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
 {
@@ -171,6 +172,13 @@ QWidget* MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
         NetAssist *con = new NetAssist;
 
         con->setSettings(set);
+        w = con;
+    }
+
+    if (set.type == "Kconfig")
+    {
+        ConfigMainWindow *con = new ConfigMainWindow;
+
         w = con;
     }
 
@@ -269,7 +277,8 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
     item = (QTreeWidgetItem *)w->userData(0);
     var = item->data(1, Qt::UserRole);
     id = var.value<QString>();
-
+    w->close();
     ui->tabWidget->removeTab(index);
+
     prjfile.SetSesShow(id, false);
 }
