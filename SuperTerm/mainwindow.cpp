@@ -252,7 +252,7 @@ void MainWindow::on_del_s_triggered()
 
     id += ".dblite";
 
-
+    w->setUserData(0, NULL);
     delete w;
     delete curItem;
     dbf.remove(id);
