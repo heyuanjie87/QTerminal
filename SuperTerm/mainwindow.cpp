@@ -82,11 +82,14 @@ void MainWindow::addSession(Session &set, bool save)
         QVariant var;
 
         var.setValue(w);
-        ui->tabWidget->addTab(w, set.name);
         child->setData(0, Qt::UserRole, var);
 
         var.setValue(set.id);
         child->setData(1, Qt::UserRole, var);
+        w->setUserData(0, (QObjectUserData*)child);
+
+        if (set.show == "1")
+            ui->tabWidget->addTab(w, set.name);
 
         if (save)
         {
@@ -178,8 +181,9 @@ void MainWindow::on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int colum
 {
     QWidget *w;
     QVariant var;
+    QString id;
 
-    var = item->data(column, Qt::UserRole);
+    var = item->data(0, Qt::UserRole);
     if (var == 0)
         return;
 
@@ -191,6 +195,10 @@ void MainWindow::on_twProject_itemDoubleClicked(QTreeWidgetItem *item, int colum
     else
     {
         ui->tabWidget->addTab(w, item->text(0));
+
+        var = item->data(1, Qt::UserRole);
+        id = var.value<QString>();
+        prjfile.SetSesShow(id, true);
     }
 }
 
@@ -252,5 +260,16 @@ void MainWindow::on_del_s_triggered()
 
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
 {
+    QString id;
+    QVariant var;
+    QWidget *w;
+    QTreeWidgetItem *item;
+
+    w = ui->tabWidget->widget(index);
+    item = (QTreeWidgetItem *)w->userData(0);
+    var = item->data(1, Qt::UserRole);
+    id = var.value<QString>();
+
     ui->tabWidget->removeTab(index);
+    prjfile.SetSesShow(id, false);
 }

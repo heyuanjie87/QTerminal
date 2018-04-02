@@ -37,6 +37,7 @@ void NewSession::getSetting(Session &s)
     cur = wSetting[type];
     s.type = type;
     s.name = ui->sesName->text();
+    s.show = "1";
     if (cur != NULL)
     {
         cur->getSetting(s.param);

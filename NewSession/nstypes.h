@@ -11,6 +11,7 @@ typedef struct
     QString type;
     QString name;
     QString id;
+    QString show;
 
     SesParam param;
 }Session;

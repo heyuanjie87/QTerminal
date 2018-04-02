@@ -94,6 +94,7 @@ bool ProjectFile::GetSessionList(SesList &sl)
 
             ses.id = sesEle.attribute("ID");
             ses.name = sesEle.attribute("name");
+            ses.show = sesEle.attribute("show");
 
             getSession(sesEle, ses);
 
@@ -135,6 +136,7 @@ _again:
             e = doc->createElement("session");
             e.setAttribute("ID", ses.id);
             e.setAttribute("name", ses.name);
+            e.setAttribute("show", ses.show);
             type.appendChild(e);
 
             addParam(e, ses);
@@ -183,6 +185,37 @@ void ProjectFile::init()
     doc->appendChild(*root);
 
     prjfile = new QFile;
+}
+
+void ProjectFile::SetSesShow(QString &id, bool s)
+{
+   QString val;
+   QDomNodeList list;
+
+   val = s? "1":"0";
+
+   list = doc->elementsByTagName("type");
+
+   for (int i = 0; i < list.size(); i ++)
+   {
+       QDomNode item = list.item(i);
+       QDomElement type, ele;
+
+       type = item.toElement();
+       ele = type.firstChildElement();
+
+       while (!ele.isNull())
+       {
+           if (ele.attribute("ID") == id)
+           {
+               ele.setAttribute(QString("show"), val);
+               Save();
+               return;
+           }
+
+           ele = ele.nextSiblingElement();
+       }
+   }
 }
 
 void ProjectFile::DelSession(QString &id)

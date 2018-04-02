@@ -20,6 +20,7 @@ public:
     void DelSession(QString &id);
     void AddSession(Session &ses);
     void Save();
+    void SetSesShow(QString &id, bool s);
 
 signals:
 
