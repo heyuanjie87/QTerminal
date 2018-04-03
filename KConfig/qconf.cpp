@@ -6,6 +6,7 @@
 #include <QAction>
 #include <QFileDialog>
 #include <QMenu>
+#include <QStatusBar>
 
 #include <qapplication.h>
 #include <qdesktopwidget.h>
@@ -1044,6 +1045,8 @@ ConfigMainWindow::ConfigMainWindow(void)
 
     resize(700, 600);
 
+    initToolBt();
+
     split1 = new QSplitter(Qt::Horizontal, this);
     setCentralWidget(split1);
 
@@ -1097,7 +1100,7 @@ ConfigMainWindow::ConfigMainWindow(void)
     config->addAction(saveAsAction);
     config->addSeparator();
     config->addAction(quitAction);
-
+#endif
     connect(configList, SIGNAL(menuChanged(struct menu *)),
         helpText, SLOT(setInfo(struct menu *)));
     connect(configList, SIGNAL(menuSelected(struct menu *)),
@@ -1117,11 +1120,22 @@ ConfigMainWindow::ConfigMainWindow(void)
         SLOT(listFocusChanged(void)));
     connect(helpText, SIGNAL(menuSelected(struct menu *)),
         SLOT(setMenuLink(struct menu *)));
-#endif
+
     worker = new QKconfig;
 
     connect(worker, SIGNAL(parseDone(int)), this, SLOT(parseDone(int)));
     connect(worker, SIGNAL(msgOut(QString)), this, SLOT(msgRecv(QString)));
+}
+
+void ConfigMainWindow::initToolBt(void)
+{
+    btLoad = new QPushButton(this);
+
+    btLoad->setText("Load");
+    connect(btLoad, SIGNAL(clicked()),
+            this, SLOT(loadConfig()));
+
+    statusBar()->addWidget(btLoad);
 }
 
 void ConfigMainWindow::loadConfig(void)
@@ -1129,13 +1143,9 @@ void ConfigMainWindow::loadConfig(void)
     QString s = QFileDialog::getOpenFileName(this, "", conf_get_configname());
     if (s.isNull())
         return;
+    putenv("RTT_DIR=F:/rt-thread");
 
     worker->parseReq(s);
-#if 0
-    if (conf_read(QFile::encodeName(s)))
-        QMessageBox::information(this, "qconf", _("Unable to load configuration!"));
-    ConfigView::updateListAll();
-#endif
 }
 
 void ConfigMainWindow::parseDone(int err)
@@ -1175,10 +1185,10 @@ void ConfigMainWindow::saveConfigAs(void)
 void ConfigMainWindow::changeMenu(struct menu *menu)
 {
     configList->setRootMenu(menu);
-    if (configList->rootEntry->parent == rootMen)
-        backAction->setEnabled(false);
-    else
-        backAction->setEnabled(true);
+//    if (configList->rootEntry->parent == rootMen)
+//        backAction->setEnabled(false);
+//    else
+//        backAction->setEnabled(true);
 }
 
 void ConfigMainWindow::setMenuLink(struct menu *menu)
@@ -1244,8 +1254,8 @@ void ConfigMainWindow::goBack(void)
     ConfigItem* item, *oldSelection;
 
     configList->setParentMenu(rootMen);
-    if (configList->rootEntry == rootMen)
-        backAction->setEnabled(false);
+  //  if (configList->rootEntry == rootMen)
+  //      backAction->setEnabled(false);
 
     if (menuList->selectedItems().count() == 0)
         return;
@@ -1288,7 +1298,6 @@ void ConfigMainWindow::showSplitView(void)
  */
 void ConfigMainWindow::closeEvent(QCloseEvent* e)
 {
-    qDebug("close");
     if (!worker->isChanged())
     {
         e->accept();
@@ -1300,7 +1309,8 @@ void ConfigMainWindow::closeEvent(QCloseEvent* e)
     mb.setButtonText(QMessageBox::Yes, _("&Save Changes"));
     mb.setButtonText(QMessageBox::No, _("&Discard Changes"));
     mb.setButtonText(QMessageBox::Cancel, _("Cancel Exit"));
-    switch (mb.exec()) {
+    switch (mb.exec())
+    {
     case QMessageBox::Yes:
         if (saveConfig())
             e->accept();
@@ -1318,8 +1328,8 @@ void ConfigMainWindow::closeEvent(QCloseEvent* e)
 
 void ConfigMainWindow::conf_changed(void)
 {
-    if (saveAction)
-        saveAction->setEnabled(worker->isChanged());
+    //if (saveAction)
+   //     saveAction->setEnabled(worker->isChanged());
 }
 
 void ConfigMainWindow::msgRecv(QString msg)

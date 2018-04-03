@@ -274,11 +274,11 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
     QTreeWidgetItem *item;
 
     w = ui->tabWidget->widget(index);
+
     item = (QTreeWidgetItem *)w->userData(0);
     var = item->data(1, Qt::UserRole);
     id = var.value<QString>();
-    w->close();
-    ui->tabWidget->removeTab(index);
 
+    ui->tabWidget->removeTab(index);
     prjfile.SetSesShow(id, false);
 }

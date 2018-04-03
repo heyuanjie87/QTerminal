@@ -281,6 +281,9 @@ public slots:
     void parseDone(int err);
     void msgRecv(QString msg);
 
+private:
+    void initToolBt(void);
+
 protected:
 	void closeEvent(QCloseEvent *e);
 
@@ -289,12 +292,12 @@ protected:
 	ConfigView *configView;
 	ConfigList *configList;
 	ConfigInfoView *helpText;
-	QToolBar *toolBar;
-	QAction *backAction;
-    QAction *saveAction;
 
 	QSplitter *split1;
 	QSplitter *split2;
     menu *rootMen;
     QKconfig *worker;
+
+private:
+    QPushButton *btLoad;
 };
