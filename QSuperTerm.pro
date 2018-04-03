@@ -23,6 +23,7 @@ FORMS += \
     Console/console.ui \
     NetAssist/NetAssist.ui \
     NewSession/NetAssistSetting.ui \
+    NewSession/KconfigSetting.ui
 
 HEADERS += \
     SuperTerm/mainwindow.h \
@@ -49,7 +50,8 @@ HEADERS += \
     KConfig/lkc.h \
     KConfig/lkc_proto.h \
     KConfig/qconf.h \
-    KConfig/QKconfig.h
+    KConfig/QKconfig.h \
+    NewSession/KconfigSetting.h
 
 
 SOURCES += \
@@ -82,7 +84,8 @@ SOURCES += \
     KConfig/util.c \
     KConfig/zconf.hash.c \
     KConfig/zconf.lex.c \
-    KConfig/zconf.tab.c
+    KConfig/zconf.tab.c \
+    NewSession/KconfigSetting.cpp
 
 win:
 {
