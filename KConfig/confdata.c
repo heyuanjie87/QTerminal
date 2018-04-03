@@ -751,6 +751,9 @@ int conf_write(const char *name, kcmenu_t *kcm)
 	char dirname[PATH_MAX+1], tmpname[PATH_MAX+1], newname[PATH_MAX+1];
 	char *env;
 
+    if (kcm->root.list == NULL)
+        return 1;
+
 	dirname[0] = 0;
     if (name && name[0])
     {

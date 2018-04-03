@@ -282,3 +282,36 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
     ui->tabWidget->removeTab(index);
     prjfile.SetSesShow(id, false);
 }
+
+void MainWindow::closeEvent(QCloseEvent *e)
+{
+    QTreeWidget *prj;
+
+    prj = ui->twProject;
+    for (int i = 0; i < prj->topLevelItemCount(); i ++)
+    {
+        QTreeWidgetItem *type;
+
+        type = prj->topLevelItem(i);
+        for (int c = 0; c < type->childCount(); c ++)
+        {
+            QWidget *term;
+
+            term = getTerm(type->child(c));
+            if (!term->close())
+            {
+                e->ignore();
+                return;
+            }
+        }
+    }
+}
+
+QWidget* MainWindow::getTerm(QTreeWidgetItem *prjit)
+{
+    QVariant var;
+
+    var = prjit->data(0, Qt::UserRole);
+
+    return var.value<QWidget*>();
+}

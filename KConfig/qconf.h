@@ -300,4 +300,5 @@ protected:
 
 private:
     QPushButton *btLoad;
+    QPushButton *btSave;
 };

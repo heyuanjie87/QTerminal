@@ -26,6 +26,10 @@ private:
     QTreeWidgetItem* addSessionProject(Session &set);
     QWidget* addSessionWindow(Session &set, QTreeWidgetItem *item);
     void loadSession();
+    QWidget* getTerm(QTreeWidgetItem *prjit);
+
+private:
+    void closeEvent(QCloseEvent *e);
 
 private slots:
     void about(void);

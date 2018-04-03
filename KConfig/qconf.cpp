@@ -1130,12 +1130,18 @@ ConfigMainWindow::ConfigMainWindow(void)
 void ConfigMainWindow::initToolBt(void)
 {
     btLoad = new QPushButton(this);
+    btSave = new QPushButton(this);
 
     btLoad->setText("Load");
+    btSave->setText("Save");
+
     connect(btLoad, SIGNAL(clicked()),
             this, SLOT(loadConfig()));
+    connect(btSave, SIGNAL(clicked()),
+            this, SLOT(saveConfig()));
 
     statusBar()->addWidget(btLoad);
+    statusBar()->addWidget(btSave);
 }
 
 void ConfigMainWindow::loadConfig(void)
