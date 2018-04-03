@@ -16,6 +16,7 @@ public:
 
     bool writeConfig(QString name = "");
     bool isChanged();
+    void putEnv(QString &env);
 
 signals:
     void parseReq(QString name);

@@ -1149,7 +1149,6 @@ void ConfigMainWindow::loadConfig(void)
     QString s = QFileDialog::getOpenFileName(this, "", conf_get_configname());
     if (s.isNull())
         return;
-    putenv("RTT_DIR=F:/rt-thread");
 
     worker->parseReq(s);
 }
@@ -1341,4 +1340,16 @@ void ConfigMainWindow::conf_changed(void)
 void ConfigMainWindow::msgRecv(QString msg)
 {
     helpText->addMsg(msg);
+}
+
+void ConfigMainWindow::setSettings(Session &ss)
+{
+    QString str;
+
+    str = ss.param["file"];
+    if (!str.isEmpty())
+    {
+        worker->putEnv(ss.param["env"]);
+        parse(str);
+    }
 }

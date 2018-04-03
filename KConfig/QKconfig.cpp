@@ -64,6 +64,17 @@ bool QKconfig::writeConfig(QString name)
     return conf_write(name.toStdString().c_str(), &kcm) == 0;
 }
 
+void QKconfig::putEnv(QString &env)
+{
+    QStringList list;
+
+    list = env.split(",");
+    for (int i = 0; i < list.size(); i ++)
+    {
+        putenv(list.at(i).toStdString().c_str());
+    }
+}
+
 bool QKconfig::isChanged()
 {
     return conf_get_changed(&kcm);

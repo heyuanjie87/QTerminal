@@ -258,6 +258,7 @@ private:
 };
 
 class QKconfig;
+#include "NewSession/nstypes.h"
 
 class ConfigMainWindow : public QMainWindow
 {
@@ -267,6 +268,7 @@ public:
 	ConfigMainWindow(void);
     void parse(QString &name);
     void conf_changed(void);
+    void setSettings(Session &ss);
 
 public slots:
 	void changeMenu(struct menu *);

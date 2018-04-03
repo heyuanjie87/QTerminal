@@ -179,6 +179,7 @@ QWidget* MainWindow::addSessionWindow(Session &set, QTreeWidgetItem *item)
     {
         ConfigMainWindow *con = new ConfigMainWindow;
 
+        con->setSettings(set);
         w = con;
     }
 
