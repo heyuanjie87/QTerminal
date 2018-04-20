@@ -39,7 +39,8 @@ float Ymodem::speed_clc(int total, int remain)
 
 void Ymodem::put(const QByteArray &data)
 {
-    msgq_push(data.at(0));
+    for (int i = 0; i < data.size(); i ++)
+        msgq_push(data.at(i));
 }
 
 int Ymodem::makeFirstRsp(string &name, int size, QByteArray &byte)
