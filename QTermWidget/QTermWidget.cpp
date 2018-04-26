@@ -256,6 +256,7 @@ void QTermWidget::contextMenuEvent(QContextMenuEvent *e)
     menu->addSeparator();
     menu->addAction(QString("粘贴"), this, SLOT(paste()));
     menu->addAction(QString("清空"), this, SLOT(clear()));
+    menu->addAction(QString("复制"), this, SLOT(copy()));
     menu->exec(e->globalPos());
 
     delete menu;
