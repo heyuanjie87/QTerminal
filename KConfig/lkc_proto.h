@@ -25,8 +25,8 @@ void menu_get_ext_help(struct menu *menu, struct gstr *help, struct menu *root);
 
 /* symbol.c */
 struct symbol * sym_lookup(const char *name, int flags, kcmenu_t *kcm);
-struct symbol * sym_find(const char *name);
-const char * sym_expand_string_value(const char *in);
+struct symbol * sym_find(const char *name, kcmenu_t *kcm);
+const char * sym_expand_string_value(const char *in, kcmenu_t *kcm);
 const char * sym_escape_string_value(const char *in);
 struct symbol ** sym_re_search(const char *pattern, kcmenu_t *kcm);
 const char * sym_type_name(enum symbol_type type);

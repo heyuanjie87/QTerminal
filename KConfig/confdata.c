@@ -327,7 +327,7 @@ load:
 			if (strncmp(p, "is not set", 10))
 				continue;
 			if (def == S_DEF_USER) {
-				sym = sym_find(line + 2 + strlen(CONFIG_));
+                sym = sym_find(line + 2 + strlen(CONFIG_), kcm);
 				if (!sym) {
                     sym_add_change_count(kcm, 1);
 					goto setsym;
@@ -361,7 +361,7 @@ load:
 					*p2 = 0;
 			}
 			if (def == S_DEF_USER) {
-				sym = sym_find(line + strlen(CONFIG_));
+                sym = sym_find(line + strlen(CONFIG_), kcm);
 				if (!sym) {
                     sym_add_change_count(kcm, 1);
 					goto setsym;
@@ -1268,10 +1268,10 @@ int conf_parse(const char *name, kcmenu_t *kcm)
         return -1;
 
     if (!kcm->modules_sym)
-        kcm->modules_sym = sym_find( "n" );
+        kcm->modules_sym = sym_find("n", kcm);
 
     kcm->root.prompt->text = _(kcm->root.prompt->text);
-    kcm->root.prompt->text = sym_expand_string_value(kcm->root.prompt->text);
+    kcm->root.prompt->text = sym_expand_string_value(kcm->root.prompt->text, kcm);
 
     menu_finalize(&kcm->root, kcm);
     for_all_symbols(i, sym)

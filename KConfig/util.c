@@ -11,10 +11,10 @@
 #include "lkc.h"
 
 /* file already present in list? If not add it */
-struct file *file_lookup(const char *name, struct file **file_list)
+struct file *file_lookup(const char *name, struct file **file_list, kcmenu_t *kcm)
 {
 	struct file *file;
-	const char *file_name = sym_expand_string_value(name);
+    const char *file_name = sym_expand_string_value(name, kcm);
 
     for (file = *file_list; file; file = file->next) {
 		if (!strcmp(name, file->name)) {

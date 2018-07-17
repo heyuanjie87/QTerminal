@@ -2921,7 +2921,7 @@ int zconf_initscan(const char *name, yyscan_t *yyscanner, kcmenu_t *kcm)
     ext->current_buf = xmalloc(sizeof(*ext->current_buf));
     memset(ext->current_buf, 0, sizeof(*ext->current_buf));
 
-    yyextra->curfile = file_lookup(name, &ext->filelist);
+    yyextra->curfile = file_lookup(name, &ext->filelist, kcm);
     yyextra->curfile->lineno = 1;
 
     return 0;
@@ -2933,7 +2933,7 @@ bool zconf_nextfile(const char *name, yyscan_t yyscanner)
     struct buffer *buf = xmalloc(sizeof(*buf));
     struct yyguts_t * yyg = (struct yyguts_t*)yyscanner;
     YY_EXTRA_TYPE ext = yyget_extra(yyscanner);
-    struct file *file = file_lookup(name, &ext->filelist);
+    struct file *file = file_lookup(name, &ext->filelist, ext->kcm);
 
     memset(buf, 0, sizeof(*buf));
 

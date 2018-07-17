@@ -112,7 +112,7 @@ void menu_finalize(struct menu *parent, kcmenu_t *kcm);
 void menu_set_type(int type, kcmenu_t *kcm);
 
 /* util.c */
-struct file *file_lookup(const char *name, struct file **file_list);
+struct file *file_lookup(const char *name, struct file **file_list, kcmenu_t *kcm);
 int file_write_dep(const char *name, kcmenu_t *kcm);
 void *xmalloc(size_t size);
 void *xcalloc(size_t nmemb, size_t size);

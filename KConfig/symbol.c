@@ -854,7 +854,7 @@ struct symbol *sym_lookup(const char *name, int flags, kcmenu_t *kcm)
 	return symbol;
 }
 
-struct symbol *sym_find(const char *name)
+struct symbol *sym_find(const char *name, kcmenu_t *kcm)
 {
 	struct symbol *symbol = NULL;
 	int hash = 0;
@@ -870,14 +870,13 @@ struct symbol *sym_find(const char *name)
 		}
 	}
 	hash = strhash(name) % SYMBOL_HASHSIZE;
-#if 0 //todo
+
     for (symbol = kcm->symbol_hash[hash]; symbol; symbol = symbol->next) {
 		if (symbol->name &&
 		    !strcmp(symbol->name, name) &&
 		    !(symbol->flags & SYMBOL_CONST))
 				break;
 	}
-#endif
 
 	return symbol;
 }
@@ -887,7 +886,7 @@ struct symbol *sym_find(const char *name)
  * name to be expanded shall be prefixed by a '$'. Unknown symbol expands to
  * the empty string.
  */
-const char *sym_expand_string_value(const char *in)
+const char *sym_expand_string_value(const char *in, kcmenu_t *kcm)
 {
 	const char *src;
 	char *res;
@@ -911,7 +910,7 @@ const char *sym_expand_string_value(const char *in)
 			*p++ = *src++;
 		*p = '\0';
 
-         sym = sym_find(name);
+         sym = sym_find(name, kcm);
 		if (sym != NULL) {
 			sym_calc_value(sym);
 			symval = sym_get_string_value(sym);
