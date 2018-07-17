@@ -71,7 +71,7 @@ typedef void* yyscan_t;
 struct file* zconf_current_file(yyscan_t yyscanner);
 void zconf_starthelp(yyscan_t yyscanner);
 FILE *zconf_fopen(const char *name);
-int zconf_initscan(const char *name, yyscan_t *yyscanner, struct msg_out *msgout);
+int zconf_initscan(const char *name, yyscan_t *yyscanner, kcmenu_t *kcm);
 bool zconf_nextfile(const char *name, yyscan_t yyscanner);
 int zconf_lineno(yyscan_t yyscanner);
 const char *zconf_curname(yyscan_t yyscanner);

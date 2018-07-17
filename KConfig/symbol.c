@@ -911,7 +911,7 @@ const char *sym_expand_string_value(const char *in)
 			*p++ = *src++;
 		*p = '\0';
 
-        //todo sym = sym_find(name);
+         sym = sym_find(name);
 		if (sym != NULL) {
 			sym_calc_value(sym);
 			symval = sym_get_string_value(sym);

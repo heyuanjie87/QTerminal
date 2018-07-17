@@ -1257,7 +1257,7 @@ int conf_parse(const char *name, kcmenu_t *kcm)
     struct symbol *sym;
     int i;
 
-    if (zconf_initscan(name, &kcm->yyscanner, &kcm->msgout) != 0)
+    if (zconf_initscan(name, &kcm->yyscanner, kcm) != 0)
         return -1;
 
     sym_init(kcm);

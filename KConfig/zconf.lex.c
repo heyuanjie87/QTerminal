@@ -841,7 +841,7 @@ struct zconf_ext
     struct file *curfile;
     struct positon curpos;
     struct file *filelist;
-    struct msg_out *msgout;
+    kcmenu_t *kcm;
 };
 
 #define YY_EXTRA_TYPE    struct zconf_ext*
@@ -2412,11 +2412,7 @@ static void yy_fatal_error (yyscan_t yyscanner, int type, const char* fmt , ...)
 
     va_start(args, fmt);
     ext = yyget_extra(yyscanner);
-    if (ext->msgout && ext->msgout->print)
-    {
-
-        ext->msgout->print(ext->msgout, type, fmt, args);
-    }
+    //todo
     va_end(args);
 }
 
@@ -2892,7 +2888,7 @@ FILE *zconf_fopen(const char *name)
     return f;
 }
 
-int zconf_initscan(const char *name, yyscan_t *yyscanner, struct msg_out *msgout)
+int zconf_initscan(const char *name, yyscan_t *yyscanner, kcmenu_t *kcm)
 {
     YY_EXTRA_TYPE ext;
     struct yyguts_t *yyg;
@@ -2909,7 +2905,7 @@ int zconf_initscan(const char *name, yyscan_t *yyscanner, struct msg_out *msgout
         free(ext);
         return -1;
     }
-    ext->msgout = msgout;
+    ext->kcm = kcm;
     yyg = (struct yyguts_t*)*yyscanner;
 
     yyin = zconf_fopen(name);
