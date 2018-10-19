@@ -141,7 +141,7 @@ void QTermScreen::CursorHorizontal(int pos)
     cp = tc.positionInBlock();
     if (pos > cp)
     {
-        QString space(pos - cp, ' ');
+        QString space(pos - cp - 1, ' ');
 
         setTextCursor(tc);
         insertPlainText(space);
