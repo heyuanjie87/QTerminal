@@ -42,7 +42,7 @@ void QTermWidget::putData(const QByteArray &data)
 
     if (data.size() == 0)
         return;
-debug(data);
+
     gbtou(data, str);
     ud = data;//str.toStdString().c_str();
     for (int i = 0; i < ud.size(); i ++)
@@ -104,6 +104,7 @@ void QTermWidget::recvChar(char ch)
         default:
         {
             m_Mode = 0;
+            qDebug("M2 %X", ch);
         }break;
         }
     }break;
@@ -122,6 +123,7 @@ void QTermWidget::recvChar(char ch)
         default:
         {
             m_Mode = 0;
+            qDebug("M1 %X", ch);
         }break;
         }
     }break;
