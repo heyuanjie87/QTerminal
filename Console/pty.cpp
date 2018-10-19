@@ -1,14 +1,17 @@
 #include "pty.h"
 #include <QWinEventNotifier>
 
-Pty* fffd = NULL;
-
 Pty::Pty(QObject *parent) : QObject(parent)
 {
     wpty = NULL;
     memset(&rov, 0, sizeof(rov));
     connect(this, &_queRR, this, &pendRR,
             Qt::QueuedConnection);
+}
+
+Pty::~Pty()
+{
+    winpty_free(wpty);
 }
 
 bool Pty::start(QString name, QString args = "")

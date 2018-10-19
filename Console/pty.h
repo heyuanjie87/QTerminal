@@ -13,6 +13,7 @@ class Pty : public QObject
 
 public:
     explicit Pty(QObject *parent = 0);
+    ~Pty();
 
     bool start(QString name, QString args);
     QByteArray readAll();
