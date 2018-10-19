@@ -132,6 +132,28 @@ void QTermScreen::CursorPosition(int row, int column)
     setTextCursor(tc);
 }
 
+void QTermScreen::CursorHorizontal(int pos)
+{
+    QTextCursor tc = textCursor();
+    int cp;
+
+    tc.movePosition(QTextCursor::End);
+    cp = tc.positionInBlock();
+    if (pos > cp)
+    {
+        QString space(pos - cp, ' ');
+
+        setTextCursor(tc);
+        insertPlainText(space);
+    }
+    else
+    {
+        tc.movePosition(QTextCursor::Start);
+        tc.setPosition(pos);
+        setTextCursor(tc);
+    }
+}
+
 void QTermScreen::DisplayForeground(QColor &color)
 {
     QTextCharFormat fmt;

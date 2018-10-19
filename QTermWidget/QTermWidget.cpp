@@ -66,6 +66,7 @@ void QTermWidget::recvChar(char ch)
         case 'C':
         case 'D':
         case 'H':
+        case 'G':
         {
             m_Mode = 0;
             moveCursor(ch);
@@ -455,6 +456,9 @@ void QTermWidget::moveCursor(char cmd)
         break;
     case 'H':
         CursorPosition(p[0], p[1]);
+        break;
+    case 'G':
+        CursorHorizontal(p[0]);
         break;
     }
 }
