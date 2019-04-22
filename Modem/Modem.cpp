@@ -50,6 +50,7 @@ void Modem::startTransfer(char type)
 {
     showTransfer(1, 1, 0);
     show();
+    ym->setModemMode(type);
     ym->start();
 }
 

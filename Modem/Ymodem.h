@@ -18,9 +18,12 @@ public:
 
     void close();
     void put(const QByteArray &data);
+    void setModemMode(int m);
+
+private:
 
     int makeFirstRsp(string &name, int size, QByteArray &byte);
-    int makeNextRsp(char *data, int size, QByteArray &byte);
+    int makeNextRsp(char *data, int size, QByteArray &byte, int mode);
     int makeEotRsp(QByteArray &byte);
     int makeFinishRsp(QByteArray &byte);
 
@@ -83,6 +86,7 @@ private:
     uint8_t sn;
     queue <int> msgq;
     time_t  stx_time;
+    int mMode;
 };
 
 #endif // YMODEM_H

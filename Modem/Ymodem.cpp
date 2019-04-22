@@ -10,6 +10,7 @@ Ymodem::Ymodem(Modem *parent)
 {
     isrun = false;
     ui = parent;
+    mMode = 'y';
 }
 
 void Ymodem::close()
@@ -65,26 +66,39 @@ int Ymodem::makeFirstRsp(string &name, int size, QByteArray &byte)
     return len;
 }
 
-int Ymodem::makeNextRsp(char *data, int size, QByteArray &byte)
+int Ymodem::makeNextRsp(char *data, int size, QByteArray &byte, int mode)
 {
     int len = 0;
     ymhead_t *pkt;
     uint16_t *sum;
+    int fmsize;
+    uint8_t start;
 
-    byte.resize(3 + 1024 + 2);
+    if (mode == 'x')
+    {
+        fmsize = 128;
+        start = 0x01;
+    }
+    else
+    {
+        fmsize = 1024;
+        start = 0x02;
+    }
+
+    byte.resize(3 + fmsize + 2);
     pkt = (ymhead_t *)byte.data();
     sn ++;
-    pkt->start = 0x02;
+    pkt->start = start;
     pkt->sn = sn;
     pkt->nsn = 0xFF - sn;
     memcpy(pkt->data, data, size);
-    if (size < 1024)
+    if (size < fmsize)
     {
-        memset(&pkt->data[size], 0, 1024 - size);
+        memset(&pkt->data[size], 0, fmsize - size);
     }
-    len = 1024 + 3;
+    len = fmsize + 3;
     sum = (uint16_t*)(((char*)pkt) + len);
-    *sum = crc16(pkt->data, 1024);
+    *sum = crc16(pkt->data, fmsize);
     len += 2;
 
     return len;
@@ -155,6 +169,11 @@ void Ymodem::showStatus(const char *s)
     ui->showStatus(s);
 }
 
+void Ymodem::setModemMode(int m)
+{
+    mMode = m;
+}
+
 void Ymodem::run()
 {
     QString filename;
@@ -165,6 +184,7 @@ void Ymodem::run()
     QFile file;
     string stext;
     int remain = 0;
+    int fmsize;
 
     showStatus("已启动Ymodem");
     ui->getFile(filename);
@@ -183,6 +203,10 @@ void Ymodem::run()
 
     Stage = msFirst;
     isrun = true;
+    if (mMode == 'x')
+        fmsize = 128;
+    else
+        fmsize = 1024;
 
     while (isrun)
     {
@@ -236,9 +260,9 @@ void Ymodem::run()
             {
                 int size;
 
-                size = file.read(fbuf, 1024);
+                size = file.read(fbuf, fmsize);
                 remain -= size;
-                makeNextRsp(fbuf, size, byte);
+                makeNextRsp(fbuf, size, byte, mMode);
 
                 isread = true;
                 outData(byte);
