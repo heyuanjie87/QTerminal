@@ -5,7 +5,6 @@
 #include "SerialSetting.h"
 #include "TelnetSetting.h"
 #include "NetAssistSetting.h"
-#include "KconfigSetting.h"
 
 NewSession::NewSession(QWidget *parent) :
     QDialog(parent),
@@ -21,7 +20,6 @@ NewSession::NewSession(QWidget *parent) :
     wSetting["串口终端"] = sset;
     wSetting["telnet"] = new TelnetSetting;
     wSetting["网络助手"] = new NetAssistSetting;
-    wSetting["Kconfig"] = new KconfigSetting;
 }
 
 NewSession::~NewSession()
