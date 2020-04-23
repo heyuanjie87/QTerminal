@@ -90,12 +90,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(serial, static_cast<void (QSerialPort::*)(QSerialPort::SerialPortError)>(&QSerialPort::error),
             this, &MainWindow::handleError);
 
-    connect(serial, &QSerialPort::readyRead, this, &MainWindow::readData);
-    connect(term, &term->outData, this, &MainWindow::writeData);
+    connect(serial, SIGNAL(readyRead()), this, SLOT(readData()));
+    connect(term, SIGNAL(outData(QByteArray)), this, SLOT(writeData(QByteArray)));
 
     dlgSS = new SendSave;
 
-    connect(dlgSS, &dlgSS->outData, this, &MainWindow::writeData);
+    connect(dlgSS, SIGNAL(outData(QByteArray)), this, SLOT(writeData(QByteArray)));
     dlgSS->connectDb("save.dblite");
 
     statusBar()->addWidget(dlgSS->toolButton(3));
@@ -104,13 +104,13 @@ MainWindow::MainWindow(QWidget *parent) :
     statusBar()->addWidget(dlgSS->toolButton(2));
 
     modem = new Modem(this);
-    connect(modem, &modem->outData, this, &MainWindow::writeData);
+    connect(modem, SIGNAL(outData(QByteArray)), this, SLOT(writeData(QByteArray)));
 
     modemCheck = new QTimer;
     modemCheck->setSingleShot(true);
     connect(modemCheck, SIGNAL(timeout()), this, SLOT(startModem()));
 
-    connect(modem, &modem->exitTransfer, this, &this->exitTransfer);
+    connect(modem, SIGNAL(exitTransfer()), this, SLOT(exitTransfer()));
 }
 
 MainWindow::~MainWindow()

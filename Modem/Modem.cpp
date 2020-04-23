@@ -12,8 +12,8 @@ Modem::Modem(QWidget *parent) :
     ui->setupUi(this);
 
     ym = new Ymodem(this);
-    connect(ym, &ym->showTransfer, this, &this->showTransfer);
-    connect(ym, &ym->finished, this, &this->closed);
+    connect(ym, SIGNAL(showTransfer()), this, SLOT(showTransfer()));
+    connect(ym, SIGNAL(finished()), this, SLOT(closed()));
 }
 
 Modem::~Modem()
