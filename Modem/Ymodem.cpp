@@ -40,6 +40,9 @@ float Ymodem::speed_clc(int total, int remain)
 
 void Ymodem::put(const QByteArray &data)
 {
+    if (!isrun)
+        return;
+
     for (int i = 0; i < data.size(); i ++)
         msgq_push(data.at(i));
 }
@@ -121,6 +124,7 @@ void Ymodem::msgq_push(int msg)
 
 bool Ymodem::msgq_get(int &msg)
 {
+    msg = 0;
     if (msgq.empty())
         return false;
 
@@ -185,6 +189,7 @@ void Ymodem::run()
     string stext;
     int remain = 0;
     int fmsize;
+    int msg = 0;
 
     showStatus("已启动Ymodem");
     ui->getFile(filename);
@@ -202,16 +207,17 @@ void Ymodem::run()
     }
 
     Stage = msFirst;
-    isrun = true;
+
     if (mMode == 'x')
         fmsize = 128;
     else
         fmsize = 1024;
 
+    while (msgq_get(msg));
+    isrun = true;
+
     while (isrun)
     {
-        int msg = 0;
-
         msgq_get(msg);
 
         switch (Stage)
@@ -330,4 +336,5 @@ void Ymodem::run()
 
 err:
     showStatus("退出Ymodem");
+    isrun = false;
 }
