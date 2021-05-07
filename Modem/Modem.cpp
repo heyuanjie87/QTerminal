@@ -12,7 +12,7 @@ Modem::Modem(QWidget *parent) :
     ui->setupUi(this);
 
     ym = new Ymodem(this);
-    connect(ym, SIGNAL(showTransfer()), this, SLOT(showTransfer()));
+    connect(ym, SIGNAL(showTransfer(int, int, float)), this, SLOT(showTransfer(int, int, float)));
     connect(ym, SIGNAL(finished()), this, SLOT(closed()));
 }
 

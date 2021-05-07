@@ -20,7 +20,7 @@ public:
 
     void setFile(QString &name);
     void getFile(QString &name);
-    void startTransfer(char type = 'x');
+    void startTransfer(char type = 'y');
     void showStatus(const char *s);
     void showStatus(QString &s);
 

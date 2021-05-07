@@ -282,6 +282,9 @@ void Ymodem::run()
                     msgq_push(mcACK);
                 }
                 break;
+            case mcREQ:
+                Stage = msFirst;
+                break;
             }
         }
         break;
