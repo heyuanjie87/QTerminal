@@ -41,7 +41,7 @@ void Modem::showTransfer(int total, int remain, float speed)
     ui->progress->setValue((int)p);
     ui->progress->setFormat(fmt);
 
-    fmt = fmt.sprintf("速度:%.2fKB/S 剩余:%d/%dKB",
+    fmt = fmt.asprintf("速度:%.2fKB/S 剩余:%d/%dKB",
                       speed/1024, remain/1024, total/1024);
     showStatus(fmt);
 }

@@ -50,7 +50,7 @@ void NewSession::makeID(QString &id)
     QDateTime dt;
 
     dt = dt.currentDateTime();
-    id = id.sprintf("%d", dt.toTime_t());
+    id = id.asprintf("%d", dt.toTime_t());
 }
 
 void NewSession::on_sesType_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)

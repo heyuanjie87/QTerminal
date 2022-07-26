@@ -472,7 +472,7 @@ void QTermWidget::debug(const QByteArray &data)
     for (int i = 0; i < data.size(); i ++)
     {
         QString tmp;
-        str += tmp.sprintf("0x%02X, ", (unsigned char)(data.data()[i]));
+        str += tmp.asprintf("0x%02X, ", (unsigned char)(data.data()[i]));
     }
 
     qDebug(str.toStdString().data());

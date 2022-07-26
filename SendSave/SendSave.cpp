@@ -121,7 +121,7 @@ void SendSave::on_add_clicked()
     QString endline = "\\n";
     QString value = "test";
 
-    sn.sprintf("%d", ui->tbSave->rowCount() + 1);
+    sn = QString::asprintf("%d", ui->tbSave->rowCount() + 1);
     tableAddRow(sn, type, value, endline);
     worker->dbAddRow(sn, sn, type, value, endline);
 }
@@ -131,7 +131,7 @@ void SendSave::on_tbSave_itemChanged(QTableWidgetItem *item)
     QString sn;
     QString val;
 
-    sn.sprintf("%d", item->row() + 1);
+    sn = QString::asprintf("%d", item->row() + 1);
     val = item->text();
     worker->dbUpdateRow(sn, item->column(), val);
 
