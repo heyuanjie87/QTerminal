@@ -52,6 +52,7 @@ void SendSave::tableInit()
 void SendSave::VHeaderClicked(int index)
 {
     QByteArray buf;
+    QString name;
     QString value;
     QString endline;
     QTableWidgetItem *item;
@@ -59,12 +60,14 @@ void SendSave::VHeaderClicked(int index)
     if (index >= ui->tbSave->rowCount() || index < 0)
         return;
 
+    item = ui->tbSave->item(index, 0);
+    name = item->text();
     item = ui->tbSave->item(index, 1);
     value = item->text();
     item = ui->tbSave->item(index, 2);
     endline = item->text();
 
-    dataMake(buf, value, endline);
+    dataMake(buf, value, endline, name.at(0) == '\\');
     if (buf.size())
     {
         emit outData(buf);
@@ -172,12 +175,67 @@ void SendSave::on_clear_clicked()
     }
 }
 
-void SendSave::dataMake(QByteArray &buf, QString &value, QString &endline)
+void SendSave::dataMake(QByteArray &buf, QString &value, QString &endline, bool escape)
 {
+    bool es = false;
+
     if (value.isEmpty())
         return;
 
-    buf = value.toStdString().c_str();
+    if (escape)
+    {
+        int ch;
+        QByteArray tmp = value.toStdString().c_str();
+        char *c = tmp.data();
+        QString str;
+
+        for (int i = 0; i < tmp.length(); i ++)
+        {
+            ch = c[i];
+            if (ch == '\\')
+            {
+                es = true;
+                continue;
+            }
+
+            if (es)
+            {
+                switch (ch)
+                {
+                case 'x':
+                {
+                    bool ok;
+
+                    str = value.mid(i + 1, 2);
+
+                    ch = str.toInt(&ok, 16);
+                    if (!ok)
+                    {
+                        str = value.mid(i + 1, 1);
+                        ch = str.toInt(&ok, 16);
+                    }
+
+                    if (ok)
+                    {
+                        buf.append(ch);
+                        i += str.length();
+                    }
+                }
+                break;
+                }
+
+                es = false;
+                continue;
+            }
+
+            buf.append(ch);
+        }
+    }
+    else
+    {
+        buf = value.toStdString().c_str();
+    }
+
     int r, n;
     r = endline.count("\\r");
     n = endline.count("\\n");

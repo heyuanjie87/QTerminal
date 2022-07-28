@@ -29,7 +29,7 @@ signals:
 
 private:
     void tableInit();
-    void dataMake(QByteArray &buf, QString &value, QString &endline);
+    void dataMake(QByteArray &buf, QString &value, QString &endline, bool escape);
     void setBtName(int row, QString name);
 
 private slots:
