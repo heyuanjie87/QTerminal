@@ -292,7 +292,7 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
     case Qt::Key_Enter:
         break;
     case Qt::Key_Return:
-        byte = "\r\n";
+        byte = "\n";
         break;
     case Qt::Key_C:
         if (ctrl_press)
