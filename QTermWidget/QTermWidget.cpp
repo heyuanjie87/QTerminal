@@ -275,18 +275,23 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
         ctrl_press = true;
         break;
     case Qt::Key_Backspace:
+        byte.resize(1);
         byte[0] = 0x08;
         break;
     case Qt::Key_Left:
+        byte.resize(3);
         byte[0] = 0x1B; byte[1] = 0x5B, byte[2] = 0x44;
         break;
     case Qt::Key_Right:
+        byte.resize(3);
         byte[0] = 0x1B; byte[1] = 0x5B, byte[2] = 0x43;
         break;
     case Qt::Key_Up:
+        byte.resize(3);
         byte[0] = 0x1B; byte[1] = 0x5B, byte[2] = 0x41;
         break;
     case Qt::Key_Down:
+        byte.resize(3);
         byte[0] = 0x1B; byte[1] = 0x5B, byte[2] = 0x42;
         break;
     case Qt::Key_Enter:
@@ -297,6 +302,7 @@ void QTermWidget::keyPressEvent(QKeyEvent *e)
     case Qt::Key_C:
         if (ctrl_press)
         {
+            byte.resize(1);
             byte[0] = 0x03;
             break;
         }
