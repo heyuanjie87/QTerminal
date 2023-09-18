@@ -248,7 +248,7 @@ void QTermScreen::EraseDown()
 {
     int bntop, bnbot;
 
-    QTextCursor tctop = cursorForPosition(QPoint(0, 0));
+    QTextCursor tctop = textCursor();
     QTextCursor tcbot = cursorForPosition(QPoint(0, rect().bottom()));
 
     bntop = tctop.blockNumber();
